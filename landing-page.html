@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mizhi-bot — AI Receptionist for WhatsApp & Telegram</title>
-<meta name="description" content="24/7 AI customer service agent for small service businesses. Auto-replies in 4 languages, books appointments, syncs with Google Calendar. $49/month.">
+<meta name="description" content="Your business replies to WhatsApp 24/7 — in Chinese, English, Dutch, and Spanish. Auto-books appointments. $49/month. Built in Suriname.">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -25,17 +25,22 @@
     border-radius: 6px; font-weight: 600; font-size: 0.875rem; text-decoration: none;
     transition: background 0.2s;
   }
-  .nav-cta:hover { background: #e11d48; }
+  .nav-cta:hover { background: #0d9488; }
 
   /* ── Hero ───────────────────────────── */
-  .hero { padding: 5rem 0 4rem; text-align: center; }
-  .hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
-    line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+  .hero { padding: 4rem 0 3rem; text-align: center; }
+  .hero-badge {
+    display: inline-block; background: #f0fdfa; color: #0d9488;
+    font-size: 0.85rem; font-weight: 600; padding: 0.35rem 1rem;
+    border-radius: 20px; margin-bottom: 1.5rem;
   }
-  .hero .accent { color: #e11d48; }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 900;
+    line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 1.25rem;
+  }
+  .hero .accent { color: #0d9488; }
   .hero p {
-    font-size: 1.2rem; color: #555; max-width: 540px; margin: 0 auto 2.5rem;
+    font-size: 1.1rem; color: #555; max-width: 560px; margin: 0 auto 2.5rem;
     line-height: 1.7;
   }
   .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -44,10 +49,63 @@
     font-weight: 600; text-decoration: none; border-radius: 8px;
     transition: all 0.2s; letter-spacing: 0.01em;
   }
-  .btn-primary { background: #e11d48; color: #fff; }
-  .btn-primary:hover { background: #c0103a; transform: translateY(-1px); }
+  .btn-primary { background: #0d9488; color: #fff; }
+  .btn-primary:hover { background: #0f766e; transform: translateY(-1px); }
   .btn-outline { border: 2px solid #d1d1d1; color: #1a1a1a; }
   .btn-outline:hover { border-color: #1a1a1a; }
+
+  /* ── WhatsApp Preview ──────────────── */
+  .chat-preview-section { padding: 2rem 0 4rem; }
+  .chat-preview {
+    max-width: 380px; margin: 0 auto;
+    background: #e5ddd5; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+  .chat-header {
+    background: #075e54; color: #fff; padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .chat-header .back { font-size: 1.2rem; }
+  .chat-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #25d366; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: #fff;
+  }
+  .chat-header .name { font-weight: 600; font-size: 0.95rem; }
+  .chat-header .status { font-size: 0.75rem; opacity: 0.8; }
+  .chat-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; min-height: 360px; }
+  .chat-msg {
+    max-width: 80%; padding: 0.55rem 0.75rem; border-radius: 8px;
+    font-size: 0.88rem; line-height: 1.45; position: relative;
+  }
+  .chat-msg.in {
+    align-self: flex-start; background: #fff;
+    border-top-left-radius: 2px;
+  }
+  .chat-msg.out {
+    align-self: flex-end; background: #dcf8c6;
+    border-top-right-radius: 2px;
+  }
+  .chat-msg .time { font-size: 0.68rem; color: #999; text-align: right; margin-top: 2px; }
+  .chat-msg.out .time { color: #7a7a7a; }
+  .chat-typing {
+    align-self: flex-start; background: #fff; padding: 0.6rem 0.9rem;
+    border-radius: 8px; display: flex; gap: 4px;
+  }
+  .chat-typing span {
+    width: 7px; height: 7px; border-radius: 50%; background: #bbb;
+    animation: bounce 1.2s infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+  .chat-label {
+    text-align: center; font-size: 0.85rem; color: #666; margin-top: 1rem;
+    font-style: italic;
+  }
 
   /* ── Proof bar ──────────────────────── */
   .proof-bar {
@@ -55,7 +113,7 @@
     padding: 2rem 0 3rem; border-bottom: 1px solid #e5e5e5;
   }
   .proof-item { text-align: center; }
-  .proof-num { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
+  .proof-num { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #0d9488; }
   .proof-label { font-size: 0.85rem; color: #777; margin-top: 0.25rem; }
 
   /* ── Sections ───────────────────────── */
@@ -70,7 +128,7 @@
 
   /* ── Features ───────────────────────── */
   .features {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
   }
   .feature {
@@ -89,12 +147,34 @@
     border: 1px solid #eee; text-align: center;
   }
   .step-num {
-    width: 40px; height: 40px; background: #e11d48; color: #fff;
+    width: 40px; height: 40px; background: #0d9488; color: #fff;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 1.1rem; margin: 0 auto 1rem;
   }
   .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
   .step p { color: #666; font-size: 0.9rem; }
+
+  /* ── ROI Comparison ─────────────────── */
+  .roi-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    max-width: 700px; margin: 0 auto;
+  }
+  .roi-card {
+    padding: 2rem; border-radius: 12px; text-align: center;
+  }
+  .roi-card.bad { background: #fff5f5; border: 1px solid #fecaca; }
+  .roi-card.good { background: #f0fdfa; border: 1px solid #a7f3d0; }
+  .roi-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .roi-cost { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  .roi-card.bad .roi-cost { color: #dc2626; }
+  .roi-card.good .roi-cost { color: #0d9488; }
+  .roi-card ul { list-style: none; text-align: left; font-size: 0.9rem; color: #666; }
+  .roi-card li { padding: 0.3rem 0; }
+  .roi-card .vs { font-size: 1.5rem; font-weight: 900; color: #999; margin: 0 auto; width: 40px; }
+
+  @media (max-width: 640px) {
+    .roi-grid { grid-template-columns: 1fr; }
+  }
 
   /* ── Pricing ────────────────────────── */
   .pricing-grid {
@@ -106,30 +186,31 @@
     border: 1px solid #e5e5e5; position: relative;
   }
   .pricing-card.featured {
-    border: 2px solid #e11d48; box-shadow: 0 8px 30px rgba(225,29,72,0.1);
+    border: 2px solid #0d9488; box-shadow: 0 8px 30px rgba(13,148,136,0.1);
   }
   .pricing-card.featured::before {
     content: "Most Popular"; position: absolute; top: -12px; left: 50%;
-    transform: translateX(-50%); background: #e11d48; color: #fff;
+    transform: translateX(-50%); background: #0d9488; color: #fff;
     font-size: 0.75rem; font-weight: 700; padding: 0.25rem 1rem;
     border-radius: 20px; letter-spacing: 0.03em; text-transform: uppercase;
   }
   .plan-name { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
   .plan-price { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
   .plan-price span { font-size: 1rem; font-weight: 500; color: #777; }
+  .plan-srd { font-size: 0.85rem; color: #999; margin-bottom: 0.75rem; }
   .plan-desc { color: #777; font-size: 0.9rem; margin-bottom: 1.5rem; }
   .plan-features { list-style: none; margin-bottom: 2rem; }
   .plan-features li {
     padding: 0.4rem 0; font-size: 0.9rem; color: #444;
     border-bottom: 1px solid #f5f5f5;
   }
-  .plan-features li::before { content: "✓ "; color: #e11d48; font-weight: 700; }
+  .plan-features li::before { content: "✓ "; color: #0d9488; font-weight: 700; }
   .plan-cta {
     display: block; text-align: center; padding: 0.75rem; border-radius: 8px;
     font-weight: 600; text-decoration: none; font-size: 0.95rem;
   }
-  .plan-cta-primary { background: #e11d48; color: #fff; }
-  .plan-cta-primary:hover { background: #c0103a; }
+  .plan-cta-primary { background: #0d9488; color: #fff; }
+  .plan-cta-primary:hover { background: #0f766e; }
   .plan-cta-outline { border: 2px solid #d1d1d1; color: #1a1a1a; }
   .plan-cta-outline:hover { border-color: #1a1a1a; }
 
@@ -144,6 +225,33 @@
   .cta-section p { color: #aaa; margin-bottom: 2rem; font-size: 1.05rem; }
   .cta-section .btn-primary { font-size: 1.1rem; padding: 1rem 3rem; }
 
+  /* ── FAQ ────────────────────────────── */
+  .faq-list { max-width: 700px; margin: 0 auto; }
+  .faq-item {
+    background: #fff; border: 1px solid #eee; border-radius: 10px;
+    margin-bottom: 0.75rem; overflow: hidden;
+  }
+  .faq-q {
+    padding: 1.25rem; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    user-select: none;
+  }
+  .faq-q:hover { background: #fafafa; }
+  .faq-a {
+    padding: 0 1.25rem 1.25rem; color: #666; font-size: 0.9rem; line-height: 1.7;
+    display: none;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-arrow { font-size: 0.8rem; transition: transform 0.2s; color: #999; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  /* ── Trust bar ──────────────────────── */
+  .trust-bar {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    align-items: center; padding: 2rem 0; color: #888; font-size: 0.85rem;
+  }
+  .trust-bar strong { color: #555; }
+
   /* ── Testimonial ────────────────────── */
   .testimonial {
     background: #fff; border: 1px solid #eee; border-radius: 12px;
@@ -151,7 +259,6 @@
   }
   .testimonial p { font-size: 1.15rem; font-style: italic; color: #444; line-height: 1.8; margin-bottom: 1.5rem; }
   .testimonial .author { font-weight: 700; color: #1a1a1a; }
-  .testimonial .role { color: #888; font-size: 0.9rem; }
 
   /* ── Footer ─────────────────────────── */
   footer {
@@ -175,22 +282,67 @@
 </nav>
 
 <section class="hero container">
-  <h1>Your <span class="accent">AI Receptionist</span><br>for WhatsApp & Telegram</h1>
+  <div class="hero-badge">Built in Paramaribo, Suriname &#127480;&#127475;</div>
+  <h1>Your WhatsApp <span class="accent">Replies to Every Customer</span> While You Work</h1>
   <p>
-    Handles inquiries, books appointments, and syncs with Google Calendar —
-    24/7 in 4 languages. Built for small service businesses tired of replying
-    to the same questions all day.
+    Same questions every day? "How much?" "Where are you?" "Got a slot tomorrow?"
+    Your AI receptionist answers them in seconds, books appointments, and only
+    wakes you up when it's something important.
   </p>
   <div class="btn-group">
-    <a href="#pricing" class="btn btn-primary">Start 14-Day Free Trial</a>
-    <a href="#how" class="btn btn-outline">See How It Works</a>
+    <a href="#signup" class="btn btn-primary">Try It Free for 14 Days</a>
+    <a href="#demo" class="btn btn-outline">See It in Action ↓</a>
   </div>
+</section>
+
+<!-- ── WhatsApp Chat Preview ────────────── -->
+<section class="chat-preview-section container" id="demo">
+  <div class="chat-preview">
+    <div class="chat-header">
+      <div class="back">←</div>
+      <div class="chat-avatar">MB</div>
+      <div>
+        <div class="name">Beauty Glow Clinic</div>
+        <div class="status">online · replies instantly</div>
+      </div>
+    </div>
+    <div class="chat-body">
+      <div class="chat-msg in">
+        Hi, how much for a facial?
+        <div class="time">2:15 PM</div>
+      </div>
+      <div class="chat-msg out">
+        Hi! Our facials start at $45 for a basic cleanse and go up to $120 for our premium treatment. Would you like me to check available slots this week? 😊
+        <div class="time">2:15 PM</div>
+      </div>
+      <div class="chat-msg in">
+        Yes, do you have anything Thursday?
+        <div class="time">2:16 PM</div>
+      </div>
+      <div class="chat-msg out">
+        Thursday we have: 10:00 AM, 2:00 PM, and 4:30 PM. Which works best for you?
+        <div class="time">2:16 PM</div>
+      </div>
+      <div class="chat-msg in">
+        2pm is good
+        <div class="time">2:17 PM</div>
+      </div>
+      <div class="chat-msg out">
+        Booked! 📅 Thursday at 2:00 PM for a facial. You'll get a reminder the day before. Anything else I can help with?
+        <div class="time">2:17 PM</div>
+      </div>
+      <div class="chat-typing">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+  <p class="chat-label">This is what your customers see. The bot replies in 5 seconds — in Chinese, English, Dutch, or Spanish.</p>
 </section>
 
 <div class="proof-bar container">
   <div class="proof-item">
-    <div class="proof-num">80%</div>
-    <div class="proof-label">Fewer Manual Replies</div>
+    <div class="proof-num">5s</div>
+    <div class="proof-label">Average Reply Time</div>
   </div>
   <div class="proof-item">
     <div class="proof-num">4</div>
@@ -198,84 +350,114 @@
   </div>
   <div class="proof-item">
     <div class="proof-num">24/7</div>
-    <div class="proof-label">Always Online</div>
+    <div class="proof-label">Never Sleeps</div>
   </div>
   <div class="proof-item">
     <div class="proof-num">$49</div>
-    <div class="proof-label">Per Month</div>
+    <div class="proof-label">Flat Monthly Fee</div>
   </div>
 </div>
 
 <section class="section container" id="features">
-  <h2>Everything Your Front Desk Needs</h2>
-  <p class="section-sub">No more hiring someone just to reply to WhatsApp.</p>
+  <h2>What It Does For Your Business</h2>
+  <p class="section-sub">Less time on your phone. More time with paying customers.</p>
 
   <div class="features">
     <div class="feature">
-      <div class="feature-icon">&#128172;</div>
-      <h3>Auto-Reply to Common Questions</h3>
-      <p>"How much?" "Where are you?" "What time?" — your bot answers them all in your brand's tone, in 4 languages.</p>
+      <div class="feature-icon">💬</div>
+      <h3>Answers FAQs Instantly</h3>
+      <p>Prices, hours, location, services — the bot knows your business and replies in your brand's tone. Customers get answers in 5 seconds, not 5 hours.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">&#128197;</div>
-      <h3>Appointment Booking</h3>
-      <p>Customers book directly through chat. Automatically checks availability and syncs to Google Calendar.</p>
+      <div class="feature-icon">📅</div>
+      <h3>Books Appointments While You Sleep</h3>
+      <p>Customer messages at 10pm? They get available slots and book instantly. Synced to your Google Calendar so you never double-book.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">&#128200;</div>
-      <h3>Lead Scoring</h3>
-      <p>Know who's serious and who's just browsing. Hot leads get flagged so you can follow up personally.</p>
+      <div class="feature-icon">🌐</div>
+      <h3>Speaks Your Customers' Language</h3>
+      <p>Auto-detects Chinese, English, Dutch, and Spanish. A Chinese customer messages in Chinese — the bot replies in Chinese. Natural, not translated.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">&#127760;</div>
-      <h3>4-Language Support</h3>
-      <p>Auto-detects Chinese, English, Dutch, and Spanish. Replies in the customer's language, naturally.</p>
+      <div class="feature-icon">🎯</div>
+      <h3>Flags the Serious Customers</h3>
+      <p>Someone asking "how much" once? Answered. Someone asking 5 questions and asking for availability? Flagged as hot lead. You follow up personally.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">&#128274;</div>
-      <h3>No Hallucinated Prices</h3>
-      <p>Built-in guardrails prevent the AI from making up prices, medical claims, or off-brand promises.</p>
+      <div class="feature-icon">🛡️</div>
+      <h3>Stays On-Brand, Every Time</h3>
+      <p>Never makes up prices. Never promises discounts you didn't approve. Never goes off-script. Your business rules, enforced automatically.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">&#9889;</div>
-      <h3>Never Goes Down</h3>
-      <p>3-provider fallback (DeepSeek → Mistral → OpenRouter), circuit breakers, and 344 automated tests.</p>
+      <div class="feature-icon">📱</div>
+      <h3>Works on Your Existing Number</h3>
+      <p>No new phone number needed. Your customers message you like always — they just get faster, better replies now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROI Comparison ────────────────────── -->
+<section class="section container" id="roi">
+  <h2>What's the Real Cost of Replying Yourself?</h2>
+  <p class="section-sub">Every hour you spend on WhatsApp is an hour you're not doing paid work.</p>
+
+  <div class="roi-grid">
+    <div class="roi-card bad">
+      <h3>Hiring a Receptionist</h3>
+      <div class="roi-cost">$350<span style="font-size:1rem;font-weight:500;">/mo</span></div>
+      <ul>
+        <li>✗ Salary or part-time wage</li>
+        <li>✗ Only works during business hours</li>
+        <li>✗ Training & turnover</li>
+        <li>✗ Sick days, leave, management</li>
+      </ul>
+    </div>
+    <div class="roi-card good">
+      <h3>mizhi-bot</h3>
+      <div class="roi-cost">$49<span style="font-size:1rem;font-weight:500;">/mo</span></div>
+      <ul>
+        <li>✓ 24/7 — never takes a day off</li>
+        <li>✓ Handles unlimited conversations</li>
+        <li>✓ 4 languages, one bot</li>
+        <li>✓ 14-day free trial. Cancel anytime.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <section class="section container" id="how">
   <h2>How It Works</h2>
-  <p class="section-sub">You're set up in one day. No technical skills needed.</p>
+  <p class="section-sub">Set up in one day. No tech skills needed.</p>
 
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
-      <h3>We Onboard You</h3>
-      <p>Send us your service menu, pricing, and brand info. We configure your bot within 24 hours.</p>
+      <h3>We Learn Your Business</h3>
+      <p>Send us your menu, prices, hours, and FAQs. We configure your bot in 24 hours, in your brand's voice.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <h3>Connect WhatsApp</h3>
-      <p>We scan a QR code. Your bot goes live on your existing WhatsApp number or a new one.</p>
+      <h3>Connect Your WhatsApp</h3>
+      <p>We scan a QR code. Your bot goes live on your existing number. Your customers won't notice the switch — they'll just notice they get replies faster.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <h3>You Relax</h3>
-      <p>Your AI receptionist handles the routine. You step in only when a conversation needs a human touch.</p>
+      <h3>You Focus on Your Work</h3>
+      <p>The bot handles the routine. You get notified only when a conversation needs you. Check in whenever you want.</p>
     </div>
   </div>
 </section>
 
 <section class="section container" id="pricing">
-  <h2>Simple, Transparent Pricing</h2>
-  <p class="section-sub">14-day free trial on all plans. Cancel anytime. No contracts.</p>
+  <h2>Simple Pricing. No Surprises.</h2>
+  <p class="section-sub">14-day free trial on every plan. No credit card. Cancel anytime.</p>
 
   <div class="pricing-grid">
     <div class="pricing-card">
       <div class="plan-name">Starter</div>
       <div class="plan-price">$49<span>/mo</span></div>
-      <p class="plan-desc">For small shops getting started with AI.</p>
+      <div class="plan-srd">≈ SRD 1,800</div>
+      <p class="plan-desc">For small shops that want to stop typing the same replies all day.</p>
       <ul class="plan-features">
         <li>Auto-reply to FAQs</li>
         <li>4 languages (中/EN/NL/ES)</li>
@@ -290,14 +472,15 @@
     <div class="pricing-card featured">
       <div class="plan-name">Professional</div>
       <div class="plan-price">$99<span>/mo</span></div>
-      <p class="plan-desc">For busy clinics that want full automation.</p>
+      <div class="plan-srd">≈ SRD 3,600</div>
+      <p class="plan-desc">For busy clinics that want the calendar synced and hot leads flagged.</p>
       <ul class="plan-features">
         <li>Everything in Starter</li>
-        <li>Google Calendar sync</li>
+        <li>Google Calendar auto-sync</li>
         <li>Lead scoring + hot lead alerts</li>
         <li>Custom brand voice & tone</li>
         <li>WhatsApp + Telegram</li>
-        <li>Priority support (same-day)</li>
+        <li>Same-day priority support</li>
       </ul>
       <a href="#signup" class="plan-cta plan-cta-primary" onclick="selectPlan('Professional')">Start Free Trial</a>
     </div>
@@ -305,7 +488,8 @@
     <div class="pricing-card">
       <div class="plan-name">Enterprise</div>
       <div class="plan-price">$199<span>/mo</span></div>
-      <p class="plan-desc">Multiple locations or high volume.</p>
+      <div class="plan-srd">≈ SRD 7,200</div>
+      <p class="plan-desc">Multiple locations or high volume. We tailor it to your workflow.</p>
       <ul class="plan-features">
         <li>Everything in Professional</li>
         <li>Multi-location support</li>
@@ -319,13 +503,65 @@
   </div>
 </section>
 
+<!-- ── FAQ ──────────────────────────────── -->
+<section class="section container" id="faq">
+  <h2>Questions Business Owners Ask</h2>
+  <p class="section-sub">Honest answers. No sales talk.</p>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Can I use my existing WhatsApp number?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Yes. We connect to your current WhatsApp number. Your customers keep messaging the same number — they just get faster, better replies.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What if the bot gives a wrong answer?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">We hard-code your prices, hours, and policies. The bot cannot make up prices or offer discounts you didn't approve. For anything it's unsure about, it says "let me check with the team" and notifies you — rather than guessing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Can I jump in and take over a conversation?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Absolutely. The bot handles routine questions, but when a conversation needs a human — or you just want to step in — you can take over directly from your WhatsApp. The customer won't know the difference.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Is my WhatsApp account at risk of being banned?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">We use WhatsApp's official Business API where possible. For businesses that prefer the standard WhatsApp app, we use a connection method that mimics normal phone usage. We're transparent about this — ask us and we'll explain the trade-offs for your specific situation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What if I don't like it?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Cancel anytime. No contract, no penalty. Your first 14 days are free — if it's not saving you time by day 10, cancel and you owe nothing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Do I need to install anything?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">No. You keep using WhatsApp like always. We handle all the setup remotely. The only thing you need to do is scan a QR code during onboarding — that takes 30 seconds.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Trust + CTA ──────────────────────── -->
 <section class="container cta-section" id="trial">
-  <h2>Try mizhi-bot Free for 14 Days</h2>
+  <h2>Try It Free. See If It Saves You Time.</h2>
   <p>
-    No credit card. No setup fees. We'll personally onboard you and have your
-    bot running within 24 hours.
+    No credit card. No setup fees. We'll onboard you personally and have your
+    bot running within 24 hours. If you're not saving time by day 10, walk away — free.
   </p>
-  <a href="#signup" class="btn btn-primary">Get Started Free →</a>
+  <a href="#signup" class="btn btn-primary">Get Started →</a>
 </section>
 
 <!-- ── Signup Form ─────────────────────── -->
@@ -347,15 +583,15 @@
     transition: border-color 0.2s;
   }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    outline: none; border-color: #e11d48;
+    outline: none; border-color: #0d9488;
   }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .submit-btn {
-    width: 100%; padding: 0.9rem; background: #e11d48; color: #fff;
+    width: 100%; padding: 0.9rem; background: #0d9488; color: #fff;
     border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700;
     cursor: pointer; transition: background 0.2s;
   }
-  .submit-btn:hover { background: #c0103a; }
+  .submit-btn:hover { background: #0f766e; }
   .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
   .form-success {
     display: none; text-align: center; padding: 2rem;
@@ -368,7 +604,7 @@
 
 <section class="signup-section container" id="signup">
   <h2 style="text-align:center; margin-bottom:0.5rem;">Start Your Free Trial</h2>
-  <p class="section-sub">Fill out the form below. Arthur will personally reach out within 24 hours.</p>
+  <p class="section-sub">Fill this out. Arthur (the guy who built this) will reach out within 24 hours to set you up. No pressure. No pitch. Just a conversation.</p>
 
   <div class="signup-form">
     <form id="signupForm">
@@ -405,14 +641,14 @@
         <input type="text" id="plan" name="plan" readonly placeholder="Click a pricing card above or type here" style="background:#f9f9f9;">
       </div>
       <div class="form-group">
-        <label for="message">Anything else we should know?</label>
-        <textarea id="message" name="message" rows="2" placeholder="E.g., which languages do your customers speak? How many WhatsApp messages do you get per day?"></textarea>
+        <label for="message">What should we know about your business?</label>
+        <textarea id="message" name="message" rows="2" placeholder="E.g., what languages do your customers speak? Roughly how many WhatsApp messages do you get per day?"></textarea>
       </div>
       <div class="form-error" id="formError"></div>
       <button type="submit" class="submit-btn" id="submitBtn">Send →</button>
     </form>
     <div class="form-success" id="formSuccess">
-      &#10003; Thanks! Arthur will reach out within 24 hours to set up your bot.
+      &#10003; Got it! Arthur will reach out within 24 hours to get you set up.
     </div>
   </div>
 </section>
@@ -467,15 +703,17 @@ document.getElementById("signupForm").addEventListener("submit", async function(
     <p>
       "I used to spend 3 hours a day replying to WhatsApp. Same questions over
       and over — prices, directions, appointment slots. Now the bot handles all
-      of it. I check my phone half as much. Game changer."
+      of it. I check my phone half as much."
     </p>
-    <div class="author">Beauty Clinic Owner</div>
-    <div class="role">Paramaribo, Suriname</div>
+    <div class="author">— Aesthetics Clinic, Paramaribo</div>
+  </div>
+  <div class="trust-bar">
+    <strong>1 clinic live in Paramaribo</strong> · Built in Suriname 🇸🇷 · No VC funding, just building something useful
   </div>
 </section>
 
 <footer class="container">
-  <p>mizhi-bot &copy; 2026 &middot; Built in Suriname &#127480;&#127475; &middot; <a href="mailto:arthur@mizhi-bot.com">Contact</a></p>
+  <p>mizhi-bot &copy; 2026 · Paramaribo, Suriname · <a href="mailto:arthur@mizhi-bot.com">arthur@mizhi-bot.com</a></p>
 </footer>
 
 </body>
