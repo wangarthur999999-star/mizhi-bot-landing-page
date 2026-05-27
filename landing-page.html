@@ -17,13 +17,22 @@
   /* ── Nav ────────────────────────────── */
   nav {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 1.25rem 2rem; max-width: 1100px; margin: 0 auto;
+    padding: 1.25rem 2rem; max-width: 1100px; margin: 0 auto; gap: 1rem;
   }
   .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .lang-switcher { display: flex; gap: 2px; background: #eee; border-radius: 6px; padding: 2px; }
+  .lang-btn {
+    border: none; background: transparent; padding: 0.35rem 0.55rem;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer; border-radius: 4px;
+    color: #888; transition: all 0.15s; font-family: inherit;
+  }
+  .lang-btn:hover { color: #555; }
+  .lang-btn.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   .nav-cta {
     background: #1a1a1a; color: #fff; padding: 0.5rem 1.25rem;
     border-radius: 6px; font-weight: 600; font-size: 0.875rem; text-decoration: none;
-    transition: background 0.2s;
+    transition: background 0.2s; white-space: nowrap;
   }
   .nav-cta:hover { background: #0d9488; }
 
@@ -170,11 +179,7 @@
   .roi-card.good .roi-cost { color: #0d9488; }
   .roi-card ul { list-style: none; text-align: left; font-size: 0.9rem; color: #666; }
   .roi-card li { padding: 0.3rem 0; }
-  .roi-card .vs { font-size: 1.5rem; font-weight: 900; color: #999; margin: 0 auto; width: 40px; }
-
-  @media (max-width: 640px) {
-    .roi-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .roi-grid { grid-template-columns: 1fr; } }
 
   /* ── Pricing ────────────────────────── */
   .pricing-grid {
@@ -189,7 +194,7 @@
     border: 2px solid #0d9488; box-shadow: 0 8px 30px rgba(13,148,136,0.1);
   }
   .pricing-card.featured::before {
-    content: "Most Popular"; position: absolute; top: -12px; left: 50%;
+    content: attr(data-badge); position: absolute; top: -12px; left: 50%;
     transform: translateX(-50%); background: #0d9488; color: #fff;
     font-size: 0.75rem; font-weight: 700; padding: 0.25rem 1rem;
     border-radius: 20px; letter-spacing: 0.03em; text-transform: uppercase;
@@ -223,7 +228,6 @@
     font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;
   }
   .cta-section p { color: #aaa; margin-bottom: 2rem; font-size: 1.05rem; }
-  .cta-section .btn-primary { font-size: 1.1rem; padding: 1rem 3rem; }
 
   /* ── FAQ ────────────────────────────── */
   .faq-list { max-width: 700px; margin: 0 auto; }
@@ -271,6 +275,8 @@
     .hero { padding: 3rem 0 2rem; }
     .section { padding: 3rem 0; }
     .proof-bar { gap: 1.5rem; }
+    nav { flex-wrap: wrap; justify-content: center; }
+    .lang-switcher { order: 3; }
   }
 </style>
 </head>
@@ -278,20 +284,24 @@
 
 <nav>
   <div class="logo">mizhi-bot</div>
-  <a href="#signup" class="nav-cta">Start Free Trial</a>
+  <div class="nav-right">
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      <button class="lang-btn" data-lang="zh" aria-label="中文">中文</button>
+      <button class="lang-btn" data-lang="nl" aria-label="Nederlands">NL</button>
+      <button class="lang-btn" data-lang="es" aria-label="Español">ES</button>
+    </div>
+    <a href="#signup" class="nav-cta" data-i18n="nav.cta">Start Free Trial</a>
+  </div>
 </nav>
 
 <section class="hero container">
-  <div class="hero-badge">Built in Paramaribo, Suriname &#127480;&#127475;</div>
-  <h1>Your WhatsApp <span class="accent">Replies to Every Customer</span> While You Work</h1>
-  <p>
-    Same questions every day? "How much?" "Where are you?" "Got a slot tomorrow?"
-    Your AI receptionist answers them in seconds, books appointments, and only
-    wakes you up when it's something important.
-  </p>
+  <div class="hero-badge" data-i18n="hero.badge">Built in Paramaribo, Suriname &#x1F1F8;&#x1F1F7;</div>
+  <h1 data-i18n-html="hero.title">Your WhatsApp <span class="accent">Replies to Every Customer</span> While You Work</h1>
+  <p data-i18n="hero.sub">Same questions every day? "How much?" "Where are you?" "Got a slot tomorrow?" Your AI receptionist answers them in seconds, books appointments, and only wakes you up when it's something important.</p>
   <div class="btn-group">
-    <a href="#signup" class="btn btn-primary">Try It Free for 14 Days</a>
-    <a href="#demo" class="btn btn-outline">See It in Action ↓</a>
+    <a href="#signup" class="btn btn-primary" data-i18n="hero.cta1">Try It Free for 14 Days</a>
+    <a href="#demo" class="btn btn-outline" data-i18n="hero.cta2">See It in Action ↓</a>
   </div>
 </section>
 
@@ -302,266 +312,192 @@
       <div class="back">←</div>
       <div class="chat-avatar">MB</div>
       <div>
-        <div class="name">Beauty Glow Clinic</div>
-        <div class="status">online · replies instantly</div>
+        <div class="name" data-i18n="chat.biz">Beauty Glow Clinic</div>
+        <div class="status" data-i18n="chat.status">online · replies instantly</div>
       </div>
     </div>
-    <div class="chat-body">
-      <div class="chat-msg in">
-        Hi, how much for a facial?
-        <div class="time">2:15 PM</div>
-      </div>
-      <div class="chat-msg out">
-        Hi! Our facials start at $45 for a basic cleanse and go up to $120 for our premium treatment. Would you like me to check available slots this week? 😊
-        <div class="time">2:15 PM</div>
-      </div>
-      <div class="chat-msg in">
-        Yes, do you have anything Thursday?
-        <div class="time">2:16 PM</div>
-      </div>
-      <div class="chat-msg out">
-        Thursday we have: 10:00 AM, 2:00 PM, and 4:30 PM. Which works best for you?
-        <div class="time">2:16 PM</div>
-      </div>
-      <div class="chat-msg in">
-        2pm is good
-        <div class="time">2:17 PM</div>
-      </div>
-      <div class="chat-msg out">
-        Booked! 📅 Thursday at 2:00 PM for a facial. You'll get a reminder the day before. Anything else I can help with?
-        <div class="time">2:17 PM</div>
-      </div>
-      <div class="chat-typing">
-        <span></span><span></span><span></span>
-      </div>
+    <div class="chat-body" id="chatBody">
+      <!-- Rendered by JS -->
     </div>
   </div>
-  <p class="chat-label">This is what your customers see. The bot replies in 5 seconds — in Chinese, English, Dutch, or Spanish.</p>
+  <p class="chat-label" data-i18n="chat.caption">This is what your customers see. The bot replies in 5 seconds — in Chinese, English, Dutch, or Spanish.</p>
 </section>
 
 <div class="proof-bar container">
   <div class="proof-item">
     <div class="proof-num">5s</div>
-    <div class="proof-label">Average Reply Time</div>
+    <div class="proof-label" data-i18n="proof.speed">Average Reply Time</div>
   </div>
   <div class="proof-item">
     <div class="proof-num">4</div>
-    <div class="proof-label">Languages (中/EN/NL/ES)</div>
+    <div class="proof-label" data-i18n="proof.langs">Languages (中/EN/NL/ES)</div>
   </div>
   <div class="proof-item">
     <div class="proof-num">24/7</div>
-    <div class="proof-label">Never Sleeps</div>
+    <div class="proof-label" data-i18n="proof.uptime">Never Sleeps</div>
   </div>
   <div class="proof-item">
     <div class="proof-num">$49</div>
-    <div class="proof-label">Flat Monthly Fee</div>
+    <div class="proof-label" data-i18n="proof.price">Flat Monthly Fee</div>
   </div>
 </div>
 
 <section class="section container" id="features">
-  <h2>What It Does For Your Business</h2>
-  <p class="section-sub">Less time on your phone. More time with paying customers.</p>
-
+  <h2 data-i18n="features.title">What It Does For Your Business</h2>
+  <p class="section-sub" data-i18n="features.sub">Less time on your phone. More time with paying customers.</p>
   <div class="features">
     <div class="feature">
-      <div class="feature-icon">💬</div>
-      <h3>Answers FAQs Instantly</h3>
-      <p>Prices, hours, location, services — the bot knows your business and replies in your brand's tone. Customers get answers in 5 seconds, not 5 hours.</p>
+      <div class="feature-icon">&#x1F4AC;</div>
+      <h3 data-i18n="features.f1h">Answers FAQs Instantly</h3>
+      <p data-i18n="features.f1p">Prices, hours, location, services — the bot knows your business and replies in your brand's tone. Customers get answers in 5 seconds, not 5 hours.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">📅</div>
-      <h3>Books Appointments While You Sleep</h3>
-      <p>Customer messages at 10pm? They get available slots and book instantly. Synced to your Google Calendar so you never double-book.</p>
+      <div class="feature-icon">&#x1F4C5;</div>
+      <h3 data-i18n="features.f2h">Books Appointments While You Sleep</h3>
+      <p data-i18n="features.f2p">Customer messages at 10pm? They get available slots and book instantly. Synced to your Google Calendar so you never double-book.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">🌐</div>
-      <h3>Speaks Your Customers' Language</h3>
-      <p>Auto-detects Chinese, English, Dutch, and Spanish. A Chinese customer messages in Chinese — the bot replies in Chinese. Natural, not translated.</p>
+      <div class="feature-icon">&#x1F310;</div>
+      <h3 data-i18n="features.f3h">Speaks Your Customers' Language</h3>
+      <p data-i18n="features.f3p">Auto-detects Chinese, English, Dutch, and Spanish. A Chinese customer messages in Chinese — the bot replies in Chinese. Natural, not translated.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">🎯</div>
-      <h3>Flags the Serious Customers</h3>
-      <p>Someone asking "how much" once? Answered. Someone asking 5 questions and asking for availability? Flagged as hot lead. You follow up personally.</p>
+      <div class="feature-icon">&#x1F3AF;</div>
+      <h3 data-i18n="features.f4h">Flags the Serious Customers</h3>
+      <p data-i18n="features.f4p">Someone asking "how much" once? Answered. Someone asking 5 questions and asking for availability? Flagged as hot lead. You follow up personally.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">🛡️</div>
-      <h3>Stays On-Brand, Every Time</h3>
-      <p>Never makes up prices. Never promises discounts you didn't approve. Never goes off-script. Your business rules, enforced automatically.</p>
+      <div class="feature-icon">&#x1F6E1;</div>
+      <h3 data-i18n="features.f5h">Stays On-Brand, Every Time</h3>
+      <p data-i18n="features.f5p">Never makes up prices. Never promises discounts you didn't approve. Never goes off-script. Your business rules, enforced automatically.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon">📱</div>
-      <h3>Works on Your Existing Number</h3>
-      <p>No new phone number needed. Your customers message you like always — they just get faster, better replies now.</p>
+      <div class="feature-icon">&#x1F4F1;</div>
+      <h3 data-i18n="features.f6h">Works on Your Existing Number</h3>
+      <p data-i18n="features.f6p">No new phone number needed. Your customers message you like always — they just get faster, better replies now.</p>
     </div>
   </div>
 </section>
 
 <!-- ── ROI Comparison ────────────────────── -->
 <section class="section container" id="roi">
-  <h2>What's the Real Cost of Replying Yourself?</h2>
-  <p class="section-sub">Every hour you spend on WhatsApp is an hour you're not doing paid work.</p>
-
+  <h2 data-i18n="roi.title">What's the Real Cost of Replying Yourself?</h2>
+  <p class="section-sub" data-i18n="roi.sub">Every hour you spend on WhatsApp is an hour you're not doing paid work.</p>
   <div class="roi-grid">
     <div class="roi-card bad">
-      <h3>Hiring a Receptionist</h3>
+      <h3 data-i18n="roi.badTitle">Hiring a Receptionist</h3>
       <div class="roi-cost">$350<span style="font-size:1rem;font-weight:500;">/mo</span></div>
       <ul>
-        <li>✗ Salary or part-time wage</li>
-        <li>✗ Only works during business hours</li>
-        <li>✗ Training & turnover</li>
-        <li>✗ Sick days, leave, management</li>
+        <li data-i18n="roi.bad1">✗ Salary or part-time wage</li>
+        <li data-i18n="roi.bad2">✗ Only works during business hours</li>
+        <li data-i18n="roi.bad3">✗ Training &amp; turnover</li>
+        <li data-i18n="roi.bad4">✗ Sick days, leave, management</li>
       </ul>
     </div>
     <div class="roi-card good">
       <h3>mizhi-bot</h3>
       <div class="roi-cost">$49<span style="font-size:1rem;font-weight:500;">/mo</span></div>
       <ul>
-        <li>✓ 24/7 — never takes a day off</li>
-        <li>✓ Handles unlimited conversations</li>
-        <li>✓ 4 languages, one bot</li>
-        <li>✓ 14-day free trial. Cancel anytime.</li>
+        <li data-i18n="roi.good1">✓ 24/7 — never takes a day off</li>
+        <li data-i18n="roi.good2">✓ Handles unlimited conversations</li>
+        <li data-i18n="roi.good3">✓ 4 languages, one bot</li>
+        <li data-i18n="roi.good4">✓ 14-day free trial. Cancel anytime.</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section class="section container" id="how">
-  <h2>How It Works</h2>
-  <p class="section-sub">Set up in one day. No tech skills needed.</p>
-
+  <h2 data-i18n="how.title">How It Works</h2>
+  <p class="section-sub" data-i18n="how.sub">Set up in one day. No tech skills needed.</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
-      <h3>We Learn Your Business</h3>
-      <p>Send us your menu, prices, hours, and FAQs. We configure your bot in 24 hours, in your brand's voice.</p>
+      <h3 data-i18n="how.s1h">We Learn Your Business</h3>
+      <p data-i18n="how.s1p">Send us your menu, prices, hours, and FAQs. We configure your bot in 24 hours, in your brand's voice.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <h3>Connect Your WhatsApp</h3>
-      <p>We scan a QR code. Your bot goes live on your existing number. Your customers won't notice the switch — they'll just notice they get replies faster.</p>
+      <h3 data-i18n="how.s2h">Connect Your WhatsApp</h3>
+      <p data-i18n="how.s2p">We scan a QR code. Your bot goes live on your existing number. Your customers won't notice the switch — they'll just notice they get replies faster.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <h3>You Focus on Your Work</h3>
-      <p>The bot handles the routine. You get notified only when a conversation needs you. Check in whenever you want.</p>
+      <h3 data-i18n="how.s3h">You Focus on Your Work</h3>
+      <p data-i18n="how.s3p">The bot handles the routine. You get notified only when a conversation needs you. Check in whenever you want.</p>
     </div>
   </div>
 </section>
 
 <section class="section container" id="pricing">
-  <h2>Simple Pricing. No Surprises.</h2>
-  <p class="section-sub">14-day free trial on every plan. No credit card. Cancel anytime.</p>
+  <h2 data-i18n="pricing.title">Simple Pricing. No Surprises.</h2>
+  <p class="section-sub" data-i18n="pricing.sub">14-day free trial on every plan. No credit card. Cancel anytime.</p>
 
   <div class="pricing-grid">
     <div class="pricing-card">
       <div class="plan-name">Starter</div>
       <div class="plan-price">$49<span>/mo</span></div>
       <div class="plan-srd">≈ SRD 1,800</div>
-      <p class="plan-desc">For small shops that want to stop typing the same replies all day.</p>
-      <ul class="plan-features">
-        <li>Auto-reply to FAQs</li>
-        <li>4 languages (中/EN/NL/ES)</li>
-        <li>Appointment booking via chat</li>
-        <li>Basic lead capture</li>
-        <li>WhatsApp OR Telegram</li>
-        <li>Email support</li>
+      <p class="plan-desc" data-i18n="pricing.sDesc">For small shops that want to stop typing the same replies all day.</p>
+      <ul class="plan-features" id="planSFeatures">
+        <li data-i18n="pricing.s1">Auto-reply to FAQs</li>
+        <li data-i18n="pricing.s2">4 languages (中/EN/NL/ES)</li>
+        <li data-i18n="pricing.s3">Appointment booking via chat</li>
+        <li data-i18n="pricing.s4">Basic lead capture</li>
+        <li data-i18n="pricing.s5">WhatsApp OR Telegram</li>
+        <li data-i18n="pricing.s6">Email support</li>
       </ul>
-      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Starter')">Start Free Trial</a>
+      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Starter')" data-i18n="pricing.cta">Start Free Trial</a>
     </div>
 
-    <div class="pricing-card featured">
+    <div class="pricing-card featured" data-badge="Most Popular">
       <div class="plan-name">Professional</div>
       <div class="plan-price">$99<span>/mo</span></div>
       <div class="plan-srd">≈ SRD 3,600</div>
-      <p class="plan-desc">For busy clinics that want the calendar synced and hot leads flagged.</p>
-      <ul class="plan-features">
-        <li>Everything in Starter</li>
-        <li>Google Calendar auto-sync</li>
-        <li>Lead scoring + hot lead alerts</li>
-        <li>Custom brand voice & tone</li>
-        <li>WhatsApp + Telegram</li>
-        <li>Same-day priority support</li>
+      <p class="plan-desc" data-i18n="pricing.pDesc">For busy clinics that want the calendar synced and hot leads flagged.</p>
+      <ul class="plan-features" id="planPFeatures">
+        <li data-i18n="pricing.p1">Everything in Starter</li>
+        <li data-i18n="pricing.p2">Google Calendar auto-sync</li>
+        <li data-i18n="pricing.p3">Lead scoring + hot lead alerts</li>
+        <li data-i18n="pricing.p4">Custom brand voice &amp; tone</li>
+        <li data-i18n="pricing.p5">WhatsApp + Telegram</li>
+        <li data-i18n="pricing.p6">Same-day priority support</li>
       </ul>
-      <a href="#signup" class="plan-cta plan-cta-primary" onclick="selectPlan('Professional')">Start Free Trial</a>
+      <a href="#signup" class="plan-cta plan-cta-primary" onclick="selectPlan('Professional')" data-i18n="pricing.cta">Start Free Trial</a>
     </div>
 
     <div class="pricing-card">
       <div class="plan-name">Enterprise</div>
       <div class="plan-price">$199<span>/mo</span></div>
       <div class="plan-srd">≈ SRD 7,200</div>
-      <p class="plan-desc">Multiple locations or high volume. We tailor it to your workflow.</p>
-      <ul class="plan-features">
-        <li>Everything in Professional</li>
-        <li>Multi-location support</li>
-        <li>Custom AI training on your data</li>
-        <li>API access for CRM integration</li>
-        <li>Dedicated account manager</li>
-        <li>Phone support</li>
+      <p class="plan-desc" data-i18n="pricing.eDesc">Multiple locations or high volume. We tailor it to your workflow.</p>
+      <ul class="plan-features" id="planEFeatures">
+        <li data-i18n="pricing.e1">Everything in Professional</li>
+        <li data-i18n="pricing.e2">Multi-location support</li>
+        <li data-i18n="pricing.e3">Custom AI training on your data</li>
+        <li data-i18n="pricing.e4">API access for CRM integration</li>
+        <li data-i18n="pricing.e5">Dedicated account manager</li>
+        <li data-i18n="pricing.e6">Phone support</li>
       </ul>
-      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Enterprise')">Contact Us</a>
+      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Enterprise')" data-i18n="pricing.contact">Contact Us</a>
     </div>
   </div>
 </section>
 
 <!-- ── FAQ ──────────────────────────────── -->
 <section class="section container" id="faq">
-  <h2>Questions Business Owners Ask</h2>
-  <p class="section-sub">Honest answers. No sales talk.</p>
-
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        Can I use my existing WhatsApp number?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">Yes. We connect to your current WhatsApp number. Your customers keep messaging the same number — they just get faster, better replies.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        What if the bot gives a wrong answer?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">We hard-code your prices, hours, and policies. The bot cannot make up prices or offer discounts you didn't approve. For anything it's unsure about, it says "let me check with the team" and notifies you — rather than guessing.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        Can I jump in and take over a conversation?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">Absolutely. The bot handles routine questions, but when a conversation needs a human — or you just want to step in — you can take over directly from your WhatsApp. The customer won't know the difference.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        Is my WhatsApp account at risk of being banned?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">We use WhatsApp's official Business API where possible. For businesses that prefer the standard WhatsApp app, we use a connection method that mimics normal phone usage. We're transparent about this — ask us and we'll explain the trade-offs for your specific situation.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        What if I don't like it?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">Cancel anytime. No contract, no penalty. Your first 14 days are free — if it's not saving you time by day 10, cancel and you owe nothing.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-        Do I need to install anything?
-        <span class="faq-arrow">▼</span>
-      </div>
-      <div class="faq-a">No. You keep using WhatsApp like always. We handle all the setup remotely. The only thing you need to do is scan a QR code during onboarding — that takes 30 seconds.</div>
-    </div>
+  <h2 data-i18n="faq.title">Questions Business Owners Ask</h2>
+  <p class="section-sub" data-i18n="faq.sub">Honest answers. No sales talk.</p>
+  <div class="faq-list" id="faqList">
+    <!-- Rendered by JS -->
   </div>
 </section>
 
 <!-- ── Trust + CTA ──────────────────────── -->
 <section class="container cta-section" id="trial">
-  <h2>Try It Free. See If It Saves You Time.</h2>
-  <p>
-    No credit card. No setup fees. We'll onboard you personally and have your
-    bot running within 24 hours. If you're not saving time by day 10, walk away — free.
-  </p>
-  <a href="#signup" class="btn btn-primary">Get Started →</a>
+  <h2 data-i18n="cta.title">Try It Free. See If It Saves You Time.</h2>
+  <p data-i18n="cta.sub">No credit card. No setup fees. We'll onboard you personally and have your bot running within 24 hours. If you're not saving time by day 10, walk away — free.</p>
+  <a href="#signup" class="btn btn-primary" data-i18n="cta.btn">Get Started →</a>
 </section>
 
 <!-- ── Signup Form ─────────────────────── -->
@@ -603,57 +539,664 @@
 </style>
 
 <section class="signup-section container" id="signup">
-  <h2 style="text-align:center; margin-bottom:0.5rem;">Start Your Free Trial</h2>
-  <p class="section-sub">Fill this out. Arthur (the guy who built this) will reach out within 24 hours to set you up. No pressure. No pitch. Just a conversation.</p>
+  <h2 style="text-align:center; margin-bottom:0.5rem;" data-i18n="signup.title">Start Your Free Trial</h2>
+  <p class="section-sub" data-i18n="signup.sub">Fill this out. Arthur (the guy who built this) will reach out within 24 hours to set you up. No pressure. No pitch. Just a conversation.</p>
 
   <div class="signup-form">
     <form id="signupForm">
       <div class="form-group">
-        <label for="businessName">Business Name *</label>
-        <input type="text" id="businessName" name="businessName" required placeholder="Your clinic or shop name">
+        <label for="businessName" data-i18n="signup.bizLabel">Business Name *</label>
+        <input type="text" id="businessName" name="businessName" required data-i18n-placeholder="signup.bizPlaceholder">
       </div>
       <div class="form-group">
-        <label for="contactEmail">Email *</label>
-        <input type="email" id="contactEmail" name="contactEmail" required placeholder="you@example.com">
+        <label for="contactEmail" data-i18n="signup.emailLabel">Email *</label>
+        <input type="email" id="contactEmail" name="contactEmail" required data-i18n-placeholder="signup.emailPlaceholder">
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label for="contactPhone">WhatsApp Number</label>
-          <input type="text" id="contactPhone" name="contactPhone" placeholder="+597 xxx xxxx">
+          <label for="contactPhone" data-i18n="signup.phoneLabel">WhatsApp Number</label>
+          <input type="text" id="contactPhone" name="contactPhone" data-i18n-placeholder="signup.phonePlaceholder">
         </div>
         <div class="form-group">
-          <label for="industry">Industry</label>
+          <label for="industry" data-i18n="signup.indLabel">Industry</label>
           <select id="industry" name="industry">
-            <option value="">Select...</option>
-            <option>Beauty / Aesthetics</option>
-            <option>Dental</option>
-            <option>Barbershop / Salon</option>
-            <option>Physiotherapy / Chiro</option>
-            <option>Gym / Fitness</option>
-            <option>Tattoo Studio</option>
-            <option>Nail Salon</option>
-            <option>Other</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <label>Plan</label>
-        <input type="text" id="plan" name="plan" readonly placeholder="Click a pricing card above or type here" style="background:#f9f9f9;">
+        <label data-i18n="signup.planLabel">Plan</label>
+        <input type="text" id="plan" name="plan" readonly data-i18n-placeholder="signup.planPlaceholder" style="background:#f9f9f9;">
       </div>
       <div class="form-group">
-        <label for="message">What should we know about your business?</label>
-        <textarea id="message" name="message" rows="2" placeholder="E.g., what languages do your customers speak? Roughly how many WhatsApp messages do you get per day?"></textarea>
+        <label for="message" data-i18n="signup.msgLabel">What should we know about your business?</label>
+        <textarea id="message" name="message" rows="2" data-i18n-placeholder="signup.msgPlaceholder"></textarea>
       </div>
       <div class="form-error" id="formError"></div>
-      <button type="submit" class="submit-btn" id="submitBtn">Send →</button>
+      <button type="submit" class="submit-btn" id="submitBtn" data-i18n="signup.send">Send →</button>
     </form>
-    <div class="form-success" id="formSuccess">
+    <div class="form-success" id="formSuccess" data-i18n="signup.ok">
       &#10003; Got it! Arthur will reach out within 24 hours to get you set up.
     </div>
   </div>
 </section>
 
+<section class="section container">
+  <div class="testimonial">
+    <p data-i18n="testimonial.quote">"I used to spend 3 hours a day replying to WhatsApp. Same questions over and over — prices, directions, appointment slots. Now the bot handles all of it. I check my phone half as much."</p>
+    <div class="author" data-i18n="testimonial.author">— Aesthetics Clinic, Paramaribo</div>
+  </div>
+  <div class="trust-bar">
+    <strong data-i18n="trust.clinics">1 clinic live in Paramaribo</strong>
+    <span data-i18n="trust.built">· Built in Suriname &#x1F1F8;&#x1F1F7; · No VC funding, just building something useful</span>
+  </div>
+</section>
+
+<footer class="container">
+  <p>mizhi-bot &copy; 2026<span data-i18n="footer.addr"> · Paramaribo, Suriname</span> · <a href="mailto:arthur@mizhi-bot.com">arthur@mizhi-bot.com</a></p>
+</footer>
+
+<!-- ════════════════════════════════════════ -->
+<!--  I18N System                            -->
+<!-- ════════════════════════════════════════ -->
 <script>
+// ── Translations ────────────────────────
+const I18N = {
+  en: {
+    "nav.cta": "Start Free Trial",
+    "hero.badge": "Built in Paramaribo, Suriname 🇸🇷",
+    "hero.title": 'Your WhatsApp <span class="accent">Replies to Every Customer</span> While You Work',
+    "hero.sub": 'Same questions every day? "How much?" "Where are you?" "Got a slot tomorrow?" Your AI receptionist answers them in seconds, books appointments, and only wakes you up when it\'s something important.',
+    "hero.cta1": "Try It Free for 14 Days",
+    "hero.cta2": "See It in Action ↓",
+    "chat.biz": "Beauty Glow Clinic",
+    "chat.status": "online · replies instantly",
+    "chat.c0": "Hi, how much for a facial?",
+    "chat.c1": "Hi! Our facials start at $45 for a basic cleanse and go up to $120 for our premium treatment. Would you like me to check available slots this week? 😊",
+    "chat.c2": "Yes, do you have anything Thursday?",
+    "chat.c3": "Thursday we have: 10:00 AM, 2:00 PM, and 4:30 PM. Which works best for you?",
+    "chat.c4": "2pm is good",
+    "chat.c5": "Booked! 📅 Thursday at 2:00 PM for a facial. You'll get a reminder the day before. Anything else I can help with?",
+    "chat.caption": "This is what your customers see. The bot replies in 5 seconds — in Chinese, English, Dutch, or Spanish.",
+    "proof.speed": "Average Reply Time",
+    "proof.langs": "Languages (中/EN/NL/ES)",
+    "proof.uptime": "Never Sleeps",
+    "proof.price": "Flat Monthly Fee",
+    "features.title": "What It Does For Your Business",
+    "features.sub": "Less time on your phone. More time with paying customers.",
+    "features.f1h": "Answers FAQs Instantly",
+    "features.f1p": "Prices, hours, location, services — the bot knows your business and replies in your brand's tone. Customers get answers in 5 seconds, not 5 hours.",
+    "features.f2h": "Books Appointments While You Sleep",
+    "features.f2p": "Customer messages at 10pm? They get available slots and book instantly. Synced to your Google Calendar so you never double-book.",
+    "features.f3h": "Speaks Your Customers' Language",
+    "features.f3p": "Auto-detects Chinese, English, Dutch, and Spanish. A Chinese customer messages in Chinese — the bot replies in Chinese. Natural, not translated.",
+    "features.f4h": "Flags the Serious Customers",
+    "features.f4p": 'Someone asking "how much" once? Answered. Someone asking 5 questions and asking for availability? Flagged as hot lead. You follow up personally.',
+    "features.f5h": "Stays On-Brand, Every Time",
+    "features.f5p": "Never makes up prices. Never promises discounts you didn't approve. Never goes off-script. Your business rules, enforced automatically.",
+    "features.f6h": "Works on Your Existing Number",
+    "features.f6p": "No new phone number needed. Your customers message you like always — they just get faster, better replies now.",
+    "roi.title": "What's the Real Cost of Replying Yourself?",
+    "roi.sub": "Every hour you spend on WhatsApp is an hour you're not doing paid work.",
+    "roi.badTitle": "Hiring a Receptionist",
+    "roi.bad1": "✗ Salary or part-time wage",
+    "roi.bad2": "✗ Only works during business hours",
+    "roi.bad3": "✗ Training & turnover",
+    "roi.bad4": "✗ Sick days, leave, management",
+    "roi.good1": "✓ 24/7 — never takes a day off",
+    "roi.good2": "✓ Handles unlimited conversations",
+    "roi.good3": "✓ 4 languages, one bot",
+    "roi.good4": "✓ 14-day free trial. Cancel anytime.",
+    "how.title": "How It Works",
+    "how.sub": "Set up in one day. No tech skills needed.",
+    "how.s1h": "We Learn Your Business",
+    "how.s1p": "Send us your menu, prices, hours, and FAQs. We configure your bot in 24 hours, in your brand's voice.",
+    "how.s2h": "Connect Your WhatsApp",
+    "how.s2p": "We scan a QR code. Your bot goes live on your existing number. Your customers won't notice the switch — they'll just notice they get replies faster.",
+    "how.s3h": "You Focus on Your Work",
+    "how.s3p": "The bot handles the routine. You get notified only when a conversation needs you. Check in whenever you want.",
+    "pricing.title": "Simple Pricing. No Surprises.",
+    "pricing.sub": "14-day free trial on every plan. No credit card. Cancel anytime.",
+    "pricing.sDesc": "For small shops that want to stop typing the same replies all day.",
+    "pricing.s1": "Auto-reply to FAQs",
+    "pricing.s2": "4 languages (中/EN/NL/ES)",
+    "pricing.s3": "Appointment booking via chat",
+    "pricing.s4": "Basic lead capture",
+    "pricing.s5": "WhatsApp OR Telegram",
+    "pricing.s6": "Email support",
+    "pricing.pDesc": "For busy clinics that want the calendar synced and hot leads flagged.",
+    "pricing.p1": "Everything in Starter",
+    "pricing.p2": "Google Calendar auto-sync",
+    "pricing.p3": "Lead scoring + hot lead alerts",
+    "pricing.p4": "Custom brand voice & tone",
+    "pricing.p5": "WhatsApp + Telegram",
+    "pricing.p6": "Same-day priority support",
+    "pricing.eDesc": "Multiple locations or high volume. We tailor it to your workflow.",
+    "pricing.e1": "Everything in Professional",
+    "pricing.e2": "Multi-location support",
+    "pricing.e3": "Custom AI training on your data",
+    "pricing.e4": "API access for CRM integration",
+    "pricing.e5": "Dedicated account manager",
+    "pricing.e6": "Phone support",
+    "pricing.cta": "Start Free Trial",
+    "pricing.contact": "Contact Us",
+    "pricing.badge": "Most Popular",
+    "faq.title": "Questions Business Owners Ask",
+    "faq.sub": "Honest answers. No sales talk.",
+    "faq.q1": "Can I use my existing WhatsApp number?",
+    "faq.a1": "Yes. We connect to your current WhatsApp number. Your customers keep messaging the same number — they just get faster, better replies.",
+    "faq.q2": "What if the bot gives a wrong answer?",
+    "faq.a2": 'We hard-code your prices, hours, and policies. The bot cannot make up prices or offer discounts you didn\'t approve. For anything it\'s unsure about, it says "let me check with the team" and notifies you — rather than guessing.',
+    "faq.q3": "Can I jump in and take over a conversation?",
+    "faq.a3": "Absolutely. The bot handles routine questions, but when a conversation needs a human — or you just want to step in — you can take over directly from your WhatsApp. The customer won't know the difference.",
+    "faq.q4": "Is my WhatsApp account at risk of being banned?",
+    "faq.a4": "We use WhatsApp's official Business API where possible. For businesses that prefer the standard WhatsApp app, we use a connection method that mimics normal phone usage. We're transparent about this — ask us and we'll explain the trade-offs for your specific situation.",
+    "faq.q5": "What if I don't like it?",
+    "faq.a5": "Cancel anytime. No contract, no penalty. Your first 14 days are free — if it's not saving you time by day 10, cancel and you owe nothing.",
+    "faq.q6": "Do I need to install anything?",
+    "faq.a6": "No. You keep using WhatsApp like always. We handle all the setup remotely. The only thing you need to do is scan a QR code during onboarding — that takes 30 seconds.",
+    "cta.title": "Try It Free. See If It Saves You Time.",
+    "cta.sub": "No credit card. No setup fees. We'll onboard you personally and have your bot running within 24 hours. If you're not saving time by day 10, walk away — free.",
+    "cta.btn": "Get Started →",
+    "signup.title": "Start Your Free Trial",
+    "signup.sub": "Fill this out. Arthur (the guy who built this) will reach out within 24 hours to set you up. No pressure. No pitch. Just a conversation.",
+    "signup.bizLabel": "Business Name *",
+    "signup.bizPlaceholder": "Your clinic or shop name",
+    "signup.emailLabel": "Email *",
+    "signup.emailPlaceholder": "you@example.com",
+    "signup.phoneLabel": "WhatsApp Number",
+    "signup.phonePlaceholder": "+597 xxx xxxx",
+    "signup.indLabel": "Industry",
+    "signup.indOpts": ["Select...","Beauty / Aesthetics","Dental","Barbershop / Salon","Physiotherapy / Chiro","Gym / Fitness","Tattoo Studio","Nail Salon","Other"],
+    "signup.planLabel": "Plan",
+    "signup.planPlaceholder": "Click a pricing card above or type here",
+    "signup.msgLabel": "What should we know about your business?",
+    "signup.msgPlaceholder": "E.g., what languages do your customers speak? Roughly how many WhatsApp messages do you get per day?",
+    "signup.send": "Send →",
+    "signup.ok": "✓ Got it! Arthur will reach out within 24 hours to get you set up.",
+    "testimonial.quote": '"I used to spend 3 hours a day replying to WhatsApp. Same questions over and over — prices, directions, appointment slots. Now the bot handles all of it. I check my phone half as much."',
+    "testimonial.author": "— Aesthetics Clinic, Paramaribo",
+    "trust.clinics": "1 clinic live in Paramaribo",
+    "trust.built": "· Built in Suriname 🇸🇷 · No VC funding, just building something useful",
+    "footer.addr": " · Paramaribo, Suriname"
+  },
+
+  zh: {
+    "nav.cta": "免费试用",
+    "hero.badge": "苏里南 · 帕拉马里博制造 🇸🇷",
+    "hero.title": '你的 WhatsApp <span class="accent">自动回复每一个客户</span> 你只管工作',
+    "hero.sub": "每天同样的问题？\"多少钱？\"\"在哪？\"\"明天有空吗？\"——AI 客服 5 秒内回复，自动预约，只有在重要事情时才通知你。支持中文、英文、荷兰语、西班牙语。",
+    "hero.cta1": "免费试用 14 天",
+    "hero.cta2": "看看效果 ↓",
+    "chat.biz": "Beauty Glow 美容诊所",
+    "chat.status": "在线 · 秒回",
+    "chat.c0": "你好，做脸多少钱？",
+    "chat.c1": "您好！基础清洁 $45 起，高级护理 $120。需要我帮您查一下这周的空位吗？😊",
+    "chat.c2": "好的，周四有位置吗？",
+    "chat.c3": "周四可选：上午10:00、下午2:00、下午4:30。您哪个时间方便？",
+    "chat.c4": "下午2点吧",
+    "chat.c5": "已预约！📅 周四下午2:00 面部护理。前一天会发提醒。还有其他需要吗？",
+    "chat.caption": "这就是你的客户看到的效果。机器人在 5 秒内回复——支持中文、英文、荷兰语、西班牙语。",
+    "proof.speed": "平均回复时间",
+    "proof.langs": "语言（中/EN/NL/ES）",
+    "proof.uptime": "永不离线",
+    "proof.price": "固定月费",
+    "features.title": "它能为你的生意做什么",
+    "features.sub": "少看手机，多赚钱。",
+    "features.f1h": "秒回常见问题",
+    "features.f1p": "价格、营业时间、地址、服务项目——机器人了如指掌，按你的品牌风格回复。客户 5 秒内得到答案，不用等 5 小时。",
+    "features.f2h": "你睡觉，它帮你预约",
+    "features.f2p": "客户晚上 10 点发消息？自动显示可选时段并完成预约。同步 Google Calendar，永远不会重复预约。",
+    "features.f3h": "说客户的语言",
+    "features.f3p": "自动识别中文、英文、荷兰语、西班牙语。华人客户发中文——机器人回中文。自然对话，不是机器翻译。",
+    "features.f4h": "识别真正的意向客户",
+    "features.f4p": "只问一次\"多少钱\"？已回答。连问 5 个问题还要查空档？标记为热门线索，你亲自跟进。",
+    "features.f5h": "永远不说错话",
+    "features.f5p": "从不乱报价格。从不擅自承诺折扣。从不说偏离品牌的话。你的业务规则，自动执行。",
+    "features.f6h": "用你现有的号码",
+    "features.f6p": "不需要新号码。客户像往常一样给你发消息——他们只是发现你回得比以前快多了。",
+    "roi.title": "自己回复消息的真正成本是多少？",
+    "roi.sub": "花在 WhatsApp 上的每一小时，都是你没在赚钱的一小时。",
+    "roi.badTitle": "雇一个前台",
+    "roi.bad1": "✗ 工资或兼职工资",
+    "roi.bad2": "✗ 只在上班时间回复",
+    "roi.bad3": "✗ 培训 & 人员流动",
+    "roi.bad4": "✗ 病假、休假、管理",
+    "roi.good1": "✓ 24/7 — 从不请假",
+    "roi.good2": "✓ 无限对话量",
+    "roi.good3": "✓ 4 种语言，一个机器人",
+    "roi.good4": "✓ 14 天免费试用，随时取消",
+    "how.title": "怎么开始",
+    "how.sub": "一天内搞定，不需要任何技术。",
+    "how.s1h": "我们了解你的业务",
+    "how.s1p": "发给我们你的菜单、价格、营业时间和常见问题。24 小时内配置好你的机器人，用你的品牌风格。",
+    "how.s2h": "连接你的 WhatsApp",
+    "how.s2p": "扫个二维码就行。机器人在你现有号码上线。你的客户不会察觉——他们只会发现你回得比以前快。",
+    "how.s3h": "你专心做你的事",
+    "how.s3p": "机器人处理日常对话。只有需要你出面时才通知你。你随时可以查看。",
+    "pricing.title": "透明定价，没有套路",
+    "pricing.sub": "所有套餐均含 14 天免费试用。无需信用卡。随时取消。",
+    "pricing.sDesc": "适合想停止每天打字回复同样问题的小店。",
+    "pricing.s1": "自动回复常见问题",
+    "pricing.s2": "4 种语言（中/EN/NL/ES）",
+    "pricing.s3": "聊天内预约",
+    "pricing.s4": "基本线索收集",
+    "pricing.s5": "WhatsApp 或 Telegram",
+    "pricing.s6": "邮件支持",
+    "pricing.pDesc": "适合需要日历同步和热门线索提醒的繁忙诊所。",
+    "pricing.p1": "Starter 全部功能",
+    "pricing.p2": "Google Calendar 自动同步",
+    "pricing.p3": "线索评分 + 热门提醒",
+    "pricing.p4": "自定义品牌语气 & 风格",
+    "pricing.p5": "WhatsApp + Telegram",
+    "pricing.p6": "当日优先支持",
+    "pricing.eDesc": "多家门店或高消息量。我们根据你的工作流程定制。",
+    "pricing.e1": "Professional 全部功能",
+    "pricing.e2": "多门店支持",
+    "pricing.e3": "用你的数据定制 AI 训练",
+    "pricing.e4": "API 接入 CRM 系统",
+    "pricing.e5": "专属客户经理",
+    "pricing.e6": "电话支持",
+    "pricing.cta": "免费试用",
+    "pricing.contact": "联系我们",
+    "pricing.badge": "最受欢迎",
+    "faq.title": "老板们常问的问题",
+    "faq.sub": "诚实回答，不推销。",
+    "faq.q1": "我可以用现有的 WhatsApp 号码吗？",
+    "faq.a1": "可以。我们连接到你现在用的 WhatsApp 号码。客户继续给同一个号发消息——他们只是发现回复变快变好了。",
+    "faq.q2": "机器人给错答案怎么办？",
+    "faq.a2": "你的价格、营业时间、政策都是我们帮你写死的。机器人不会乱报价，也不会擅自承诺折扣。遇到不确定的问题，它会说\"我问问团队\"然后通知你——而不是瞎猜。",
+    "faq.q3": "我能随时接管对话吗？",
+    "faq.a3": "当然。机器人处理日常问题，但当对话需要真人时——或者你单纯想自己聊——直接从 WhatsApp 接管就行。客户感觉不到切换。",
+    "faq.q4": "我的 WhatsApp 账号会被封吗？",
+    "faq.a4": "我们优先使用 WhatsApp 官方 Business API。对于偏好普通 WhatsApp App 的商户，我们使用模拟正常手机使用的连接方式。我们对此很透明——问我们就告诉你每种方案的风险。",
+    "faq.q5": "不满意怎么办？",
+    "faq.a5": "随时取消。没有合同，没有违约金。前 14 天免费——如果第 10 天你还没省下时间，取消就是了，一分钱不用花。",
+    "faq.q6": "需要安装什么吗？",
+    "faq.a6": "不需要。你像往常一样用 WhatsApp。我们远程完成所有配置。唯一需要你做的是在开通时扫一个二维码——30 秒搞定。",
+    "cta.title": "免费试用，看看能不能帮你省时间。",
+    "cta.sub": "无需信用卡。无开通费。我们亲自帮你配置，24 小时内上线。如果用 10 天觉得没省时间——直接走，不花一分钱。",
+    "cta.btn": "开始试用 →",
+    "signup.title": "开启免费试用",
+    "signup.sub": "填下表。Arthur（做这个产品的人）会在 24 小时内联系你。不推销，不施压，就是聊聊。",
+    "signup.bizLabel": "商家名称 *",
+    "signup.bizPlaceholder": "你的诊所或店铺名称",
+    "signup.emailLabel": "邮箱 *",
+    "signup.emailPlaceholder": "you@example.com",
+    "signup.phoneLabel": "WhatsApp 号码",
+    "signup.phonePlaceholder": "+597 xxx xxxx",
+    "signup.indLabel": "行业",
+    "signup.indOpts": ["请选择...","美容 / 医美","牙科","理发 / 沙龙","理疗 / 正骨","健身房","纹身工作室","美甲","其他"],
+    "signup.planLabel": "套餐",
+    "signup.planPlaceholder": "点击上面的套餐卡或直接输入",
+    "signup.msgLabel": "关于你的生意，我们该了解什么？",
+    "signup.msgPlaceholder": "比如：你的客户说什么语言？一天大概收多少条 WhatsApp 消息？",
+    "signup.send": "发送 →",
+    "signup.ok": "✓ 收到！Arthur 会在 24 小时内联系你，帮你配置。",
+    "testimonial.quote": "\"我以前每天花 3 个小时回 WhatsApp。同样的问题反反复复——价格、地址、预约时间。现在机器人全包了。我看手机的频率少了一半。\"",
+    "testimonial.author": "— 美容诊所，帕拉马里博",
+    "trust.clinics": "帕拉马里博 1 家诊所正在使用",
+    "trust.built": "· 苏里南制造 🇸🇷 · 没有风投，只是想做个有用的东西",
+    "footer.addr": " · 苏里南 · 帕拉马里博"
+  },
+
+  nl: {
+    "nav.cta": "Gratis Proberen",
+    "hero.badge": "Gebouwd in Paramaribo, Suriname 🇸🇷",
+    "hero.title": 'Jouw WhatsApp <span class="accent">Beantwoordt Elke Klant</span> Terwijl Jij Werkt',
+    "hero.sub": 'Elke dag dezelfde vragen? "Hoeveel kost het?" "Waar zijn jullie?" "Is er morgen plek?" — Je AI-receptionist beantwoordt ze in seconden, boekt afspraken en waarschuwt je alleen als het echt belangrijk is.',
+    "hero.cta1": "14 Dagen Gratis Proberen",
+    "hero.cta2": "Zie Het in Actie ↓",
+    "chat.biz": "Beauty Glow Kliniek",
+    "chat.status": "online · antwoordt direct",
+    "chat.c0": "Hoi, hoeveel kost een gezichtsbehandeling?",
+    "chat.c1": "Hoi! Onze gezichtsbehandelingen starten vanaf $45 voor een basisreiniging tot $120 voor de premium behandeling. Zal ik beschikbare tijden deze week voor je checken? 😊",
+    "chat.c2": "Ja, heb je donderdag nog iets?",
+    "chat.c3": "Donderdag hebben we: 10:00, 14:00, en 16:30. Welke tijd past het beste?",
+    "chat.c4": "14:00 is goed",
+    "chat.c5": "Geboekt! 📅 Donderdag om 14:00 voor een gezichtsbehandeling. Je krijgt een dag van tevoren een herinnering. Kan ik nog ergens anders mee helpen?",
+    "chat.caption": "Dit is wat je klanten zien. De bot antwoordt in 5 seconden — in het Chinees, Engels, Nederlands of Spaans.",
+    "proof.speed": "Gemiddelde Reactietijd",
+    "proof.langs": "Talen (中/EN/NL/ES)",
+    "proof.uptime": "Nooit Offline",
+    "proof.price": "Vast Maandbedrag",
+    "features.title": "Wat Het Voor Je Bedrijf Doet",
+    "features.sub": "Minder tijd op je telefoon. Meer tijd voor betalende klanten.",
+    "features.f1h": "Beantwoordt Veelgestelde Vragen Direct",
+    "features.f1p": "Prijzen, openingstijden, locatie, diensten — de bot kent je bedrijf en antwoordt in jouw merktoon. Klanten krijgen binnen 5 seconden antwoord, niet 5 uur.",
+    "features.f2h": "Boekt Afspraken Terwijl Jij Slaapt",
+    "features.f2p": "Klant appt om 22:00? Ze zien beschikbare tijden en boeken direct. Gesynchroniseerd met Google Calendar zodat je nooit dubbel boekt.",
+    "features.f3h": "Spreekt de Taal van Je Klanten",
+    "features.f3p": "Detecteert automatisch Chinees, Engels, Nederlands en Spaans. Een Chinese klant appt in het Chinees — de bot antwoordt in het Chinees. Natuurlijk, niet vertaald.",
+    "features.f4h": "Markeert de Serieuze Klanten",
+    "features.f4p": 'Iemand die één keer "hoeveel kost het" vraagt? Beantwoord. Iemand die 5 vragen stelt en beschikbaarheid checkt? Gemarkeerd als hot lead. Jij volgt persoonlijk op.',
+    "features.f5h": "Blijft Altijd Bij Je Merk",
+    "features.f5p": "Verzint nooit prijzen. Belooft nooit kortingen die jij niet hebt goedgekeurd. Gaat nooit off-script. Jouw bedrijfsregels, automatisch gehandhaafd.",
+    "features.f6h": "Werkt Op Je Bestaande Nummer",
+    "features.f6p": "Geen nieuw nummer nodig. Je klanten appen je zoals altijd — ze krijgen gewoon sneller en beter antwoord.",
+    "roi.title": "Wat Kost Zelf Antwoorden Echt?",
+    "roi.sub": "Elk uur dat je op WhatsApp zit, is een uur dat je geen betaald werk doet.",
+    "roi.badTitle": "Een Receptionist Inhuren",
+    "roi.bad1": "✗ Salaris of parttime loon",
+    "roi.bad2": "✗ Werkt alleen tijdens kantooruren",
+    "roi.bad3": "✗ Training & verloop",
+    "roi.bad4": "✗ Ziektedagen, verlof, management",
+    "roi.good1": "✓ 24/7 — neemt nooit een dag vrij",
+    "roi.good2": "✓ Onbeperkt aantal gesprekken",
+    "roi.good3": "✓ 4 talen, één bot",
+    "roi.good4": "✓ 14 dagen gratis proberen. Altijd opzegbaar.",
+    "how.title": "Hoe Het Werkt",
+    "how.sub": "Binnen één dag geregeld. Geen technische kennis nodig.",
+    "how.s1h": "We Leren Je Bedrijf Kennen",
+    "how.s1p": "Stuur ons je menu, prijzen, openingstijden en veelgestelde vragen. We configureren je bot binnen 24 uur, in jouw merkstem.",
+    "how.s2h": "Koppel Je WhatsApp",
+    "how.s2p": "Wij scannen een QR-code. Je bot gaat live op je bestaande nummer. Je klanten merken het verschil niet — ze merken alleen dat je sneller reageert.",
+    "how.s3h": "Jij Richt Je Op Je Werk",
+    "how.s3p": "De bot handelt de routine af. Je krijgt alleen een melding als een gesprek jou nodig heeft. Kijk wanneer je wilt.",
+    "pricing.title": "Eenvoudige Prijzen. Geen Verrassingen.",
+    "pricing.sub": "14 dagen gratis op elk abonnement. Geen creditcard. Altijd opzegbaar.",
+    "pricing.sDesc": "Voor kleine bedrijven die willen stoppen met elke dag dezelfde berichten typen.",
+    "pricing.s1": "Automatisch antwoord op FAQ",
+    "pricing.s2": "4 talen (中/EN/NL/ES)",
+    "pricing.s3": "Afspraken boeken via chat",
+    "pricing.s4": "Basis leadregistratie",
+    "pricing.s5": "WhatsApp OF Telegram",
+    "pricing.s6": "E-mailondersteuning",
+    "pricing.pDesc": "Voor drukke klinieken die agenda-sync en hot lead-meldingen willen.",
+    "pricing.p1": "Alles van Starter",
+    "pricing.p2": "Google Calendar auto-sync",
+    "pricing.p3": "Lead scoring + hot lead alerts",
+    "pricing.p4": "Aangepaste merkt stem & toon",
+    "pricing.p5": "WhatsApp + Telegram",
+    "pricing.p6": "Prioriteitsondersteuning (zelfde dag)",
+    "pricing.eDesc": "Meerdere locaties of hoog volume. We stemmen het af op jouw workflow.",
+    "pricing.e1": "Alles van Professional",
+    "pricing.e2": "Ondersteuning voor meerdere locaties",
+    "pricing.e3": "AI-training op maat met jouw data",
+    "pricing.e4": "API-toegang voor CRM-integratie",
+    "pricing.e5": "Toegewijde accountmanager",
+    "pricing.e6": "Telefonische ondersteuning",
+    "pricing.cta": "Gratis Proberen",
+    "pricing.contact": "Neem Contact Op",
+    "pricing.badge": "Meest Gekozen",
+    "faq.title": "Vragen Die Ondernemers Stellen",
+    "faq.sub": "Eerlijke antwoorden. Geen verkooppraat.",
+    "faq.q1": "Kan ik mijn bestaande WhatsApp-nummer gebruiken?",
+    "faq.a1": "Ja. We koppelen aan je huidige WhatsApp-nummer. Je klanten appen hetzelfde nummer — ze krijgen alleen sneller en beter antwoord.",
+    "faq.q2": "Wat als de bot een verkeerd antwoord geeft?",
+    "faq.a2": 'We coderen je prijzen, tijden en beleid vast. De bot kan geen prijzen verzinnen of kortingen beloven die jij niet hebt goedgekeurd. Bij twijfel zegt hij "laat me even overleggen met het team" en krijg jij een melding — in plaats van te gokken.',
+    "faq.q3": "Kan ik een gesprek overnemen?",
+    "faq.a3": "Absoluut. De bot handelt routinevragen af, maar als een gesprek een mens nodig heeft — of je wilt gewoon zelf instappen — neem je het direct over via WhatsApp. De klant merkt het verschil niet.",
+    "faq.q4": "Loopt mijn WhatsApp-account risico op een ban?",
+    "faq.a4": "We gebruiken waar mogelijk de officiële WhatsApp Business API. Voor bedrijven die de gewone WhatsApp-app prefereren, gebruiken we een verbindingsmethode die normaal telefoongebruik nabootst. We zijn hier transparant over — vraag ons en we leggen de afwegingen uit.",
+    "faq.q5": "Wat als het me niet bevalt?",
+    "faq.a5": "Altijd opzegbaar. Geen contract, geen boete. De eerste 14 dagen zijn gratis — als het je op dag 10 geen tijd bespaart, zeg je op en ben je niets verschuldigd.",
+    "faq.q6": "Moet ik iets installeren?",
+    "faq.a6": "Nee. Je gebruikt WhatsApp zoals altijd. Wij doen alle installatie op afstand. Het enige wat jij hoeft te doen is een QR-code scannen bij de onboarding — dat duurt 30 seconden.",
+    "cta.title": "Probeer Het Gratis. Kijk Of Het Je Tijd Bespaart.",
+    "cta.sub": "Geen creditcard. Geen opstartkosten. We onboarden je persoonlijk en hebben je bot binnen 24 uur draaien. Als het je op dag 10 geen tijd bespaart — loop weg, gratis.",
+    "cta.btn": "Begin Nu →",
+    "signup.title": "Start Je Gratis Proefperiode",
+    "signup.sub": "Vul dit in. Arthur (de maker) neemt binnen 24 uur contact met je op. Geen druk. Geen verkooppraatje. Gewoon een gesprek.",
+    "signup.bizLabel": "Bedrijfsnaam *",
+    "signup.bizPlaceholder": "Je kliniek of winkelnaam",
+    "signup.emailLabel": "E-mail *",
+    "signup.emailPlaceholder": "jij@voorbeeld.com",
+    "signup.phoneLabel": "WhatsApp Nummer",
+    "signup.phonePlaceholder": "+597 xxx xxxx",
+    "signup.indLabel": "Branche",
+    "signup.indOpts": ["Selecteer...","Schoonheid / Esthetiek","Tandarts","Kapper / Salon","Fysiotherapie / Chiro","Sportschool / Fitness","Tattoo Studio","Nagelsalon","Anders"],
+    "signup.planLabel": "Abonnement",
+    "signup.planPlaceholder": "Klik hierboven op een kaart of typ hier",
+    "signup.msgLabel": "Wat moeten we weten over je bedrijf?",
+    "signup.msgPlaceholder": "Bijv.: welke talen spreken je klanten? Hoeveel WhatsApp-berichten krijg je ongeveer per dag?",
+    "signup.send": "Verstuur →",
+    "signup.ok": "✓ Ontvangen! Arthur neemt binnen 24 uur contact met je op om alles in te stellen.",
+    "testimonial.quote": '"Ik was elke dag 3 uur kwijt aan WhatsApp-beantwoorden. Steeds dezelfde vragen — prijzen, routebeschrijving, afspraaktijden. Nu doet de bot het allemaal. Ik check mijn telefoon nog maar half zo vaak."',
+    "testimonial.author": "— Schoonheidskliniek, Paramaribo",
+    "trust.clinics": "1 kliniek live in Paramaribo",
+    "trust.built": "· Gebouwd in Suriname 🇸🇷 · Geen VC-geld, gewoon iets nuttigs bouwen",
+    "footer.addr": " · Paramaribo, Suriname"
+  },
+
+  es: {
+    "nav.cta": "Prueba Gratis",
+    "hero.badge": "Hecho en Paramaribo, Surinam 🇸🇷",
+    "hero.title": 'Tu WhatsApp <span class="accent">Responde a Cada Cliente</span> Mientras Trabajas',
+    "hero.sub": '¿Las mismas preguntas cada día? "¿Cuánto cuesta?" "¿Dónde están?" "¿Hay campo mañana?" — Tu recepcionista IA responde en segundos, agenda citas y solo te avisa cuando es algo importante.',
+    "hero.cta1": "Pruébalo 14 Días Gratis",
+    "hero.cta2": "Verlo en Acción ↓",
+    "chat.biz": "Clínica Beauty Glow",
+    "chat.status": "en línea · responde al instante",
+    "chat.c0": "Hola, ¿cuánto cuesta un facial?",
+    "chat.c1": "¡Hola! Nuestros faciales empiezan en $45 para una limpieza básica y llegan hasta $120 para el tratamiento premium. ¿Quieres que revise horarios disponibles esta semana? 😊",
+    "chat.c2": "Sí, ¿tienes algo el jueves?",
+    "chat.c3": "El jueves tenemos: 10:00 AM, 2:00 PM, y 4:30 PM. ¿Cuál te va mejor?",
+    "chat.c4": "2pm está bien",
+    "chat.c5": "¡Reservado! 📅 Jueves a las 2:00 PM para un facial. Recibirás un recordatorio el día anterior. ¿Algo más en lo que pueda ayudarte?",
+    "chat.caption": "Esto es lo que ven tus clientes. El bot responde en 5 segundos — en chino, inglés, holandés o español.",
+    "proof.speed": "Tiempo Promedio de Respuesta",
+    "proof.langs": "Idiomas (中/EN/NL/ES)",
+    "proof.uptime": "Nunca Duerme",
+    "proof.price": "Tarifa Fija Mensual",
+    "features.title": "Lo Que Hace Por Tu Negocio",
+    "features.sub": "Menos tiempo en el teléfono. Más tiempo con clientes que pagan.",
+    "features.f1h": "Responde Preguntas Frecuentes al Instante",
+    "features.f1p": "Precios, horarios, ubicación, servicios — el bot conoce tu negocio y responde con el tono de tu marca. Los clientes reciben respuesta en 5 segundos, no 5 horas.",
+    "features.f2h": "Agenda Citas Mientras Duermes",
+    "features.f2p": "¿Cliente escribe a las 10pm? Ve horarios disponibles y reserva al instante. Sincronizado con Google Calendar para nunca tener doble reserva.",
+    "features.f3h": "Habla el Idioma de Tus Clientes",
+    "features.f3p": "Detecta automáticamente chino, inglés, holandés y español. Un cliente chino escribe en chino — el bot responde en chino. Natural, no traducido.",
+    "features.f4h": "Identifica a los Clientes Serios",
+    "features.f4p": '¿Alguien pregunta "cuánto cuesta" una vez? Respondido. ¿Alguien hace 5 preguntas y pide disponibilidad? Marcado como cliente potencial. Tú haces el seguimiento personal.',
+    "features.f5h": "Siempre Fiel a Tu Marca",
+    "features.f5p": "Nunca inventa precios. Nunca promete descuentos que no aprobaste. Nunca se sale del guion. Tus reglas de negocio, aplicadas automáticamente.",
+    "features.f6h": "Funciona en Tu Número Actual",
+    "features.f6p": "Sin necesidad de un número nuevo. Tus clientes te escriben como siempre — solo que ahora reciben respuestas más rápidas y mejores.",
+    "roi.title": "¿Cuál Es el Costo Real de Responder Tú Mismo?",
+    "roi.sub": "Cada hora que pasas en WhatsApp es una hora que no estás ganando dinero.",
+    "roi.badTitle": "Contratar un Recepcionista",
+    "roi.bad1": "✗ Salario o sueldo de medio tiempo",
+    "roi.bad2": "✗ Solo trabaja en horario laboral",
+    "roi.bad3": "✗ Capacitación y rotación",
+    "roi.bad4": "✗ Días de enfermedad, vacaciones, gestión",
+    "roi.good1": "✓ 24/7 — nunca toma un día libre",
+    "roi.good2": "✓ Conversaciones ilimitadas",
+    "roi.good3": "✓ 4 idiomas, un solo bot",
+    "roi.good4": "✓ 14 días gratis. Cancela cuando quieras.",
+    "how.title": "Cómo Funciona",
+    "how.sub": "Configurado en un día. Sin conocimientos técnicos.",
+    "how.s1h": "Conocemos Tu Negocio",
+    "how.s1p": "Envíanos tu menú, precios, horarios y preguntas frecuentes. Configuramos tu bot en 24 horas, con la voz de tu marca.",
+    "how.s2h": "Conecta Tu WhatsApp",
+    "how.s2p": "Escaneamos un código QR. Tu bot se activa en tu número actual. Tus clientes no notarán el cambio — solo verán que respondes más rápido.",
+    "how.s3h": "Tú Te Enfocas en Tu Trabajo",
+    "how.s3p": "El bot maneja la rutina. Solo recibes notificaciones cuando una conversación te necesita. Revisa cuando quieras.",
+    "pricing.title": "Precios Simples. Sin Sorpresas.",
+    "pricing.sub": "14 días gratis en todos los planes. Sin tarjeta de crédito. Cancela cuando quieras.",
+    "pricing.sDesc": "Para pequeños negocios que quieren dejar de escribir las mismas respuestas todo el día.",
+    "pricing.s1": "Respuesta automática a preguntas frecuentes",
+    "pricing.s2": "4 idiomas (中/EN/NL/ES)",
+    "pricing.s3": "Reserva de citas por chat",
+    "pricing.s4": "Captura básica de clientes potenciales",
+    "pricing.s5": "WhatsApp O Telegram",
+    "pricing.s6": "Soporte por correo electrónico",
+    "pricing.pDesc": "Para clínicas ocupadas que quieren calendario sincronizado y alertas de clientes potenciales.",
+    "pricing.p1": "Todo lo de Starter",
+    "pricing.p2": "Sincronización con Google Calendar",
+    "pricing.p3": "Puntuación de clientes + alertas",
+    "pricing.p4": "Voz y tono de marca personalizados",
+    "pricing.p5": "WhatsApp + Telegram",
+    "pricing.p6": "Soporte prioritario (mismo día)",
+    "pricing.eDesc": "Múltiples ubicaciones o alto volumen. Lo adaptamos a tu flujo de trabajo.",
+    "pricing.e1": "Todo lo de Professional",
+    "pricing.e2": "Soporte multilocalización",
+    "pricing.e3": "Entrenamiento IA personalizado con tus datos",
+    "pricing.e4": "Acceso API para integración CRM",
+    "pricing.e5": "Gerente de cuenta dedicado",
+    "pricing.e6": "Soporte telefónico",
+    "pricing.cta": "Prueba Gratis",
+    "pricing.contact": "Contáctanos",
+    "pricing.badge": "Más Popular",
+    "faq.title": "Preguntas Que Hacen los Dueños de Negocios",
+    "faq.sub": "Respuestas honestas. Sin discurso de ventas.",
+    "faq.q1": "¿Puedo usar mi número de WhatsApp actual?",
+    "faq.a1": "Sí. Conectamos a tu número actual de WhatsApp. Tus clientes siguen escribiendo al mismo número — solo reciben respuestas más rápidas y mejores.",
+    "faq.q2": "¿Qué pasa si el bot da una respuesta incorrecta?",
+    "faq.a2": 'Programamos tus precios, horarios y políticas. El bot no puede inventar precios ni ofrecer descuentos que no aprobaste. Si no está seguro de algo, dice "déjame consultar con el equipo" y te notifica — en lugar de adivinar.',
+    "faq.q3": "¿Puedo tomar el control de una conversación?",
+    "faq.a3": "Por supuesto. El bot maneja preguntas rutinarias, pero cuando una conversación necesita un humano — o simplemente quieres intervenir — puedes retomarla directamente desde tu WhatsApp. El cliente no notará la diferencia.",
+    "faq.q4": "¿Está en riesgo mi cuenta de WhatsApp de ser bloqueada?",
+    "faq.a4": "Usamos la API oficial de WhatsApp Business cuando es posible. Para negocios que prefieren la app normal de WhatsApp, usamos un método de conexión que imita el uso normal de un teléfono. Somos transparentes al respecto — pregúntanos y te explicamos las ventajas y desventajas.",
+    "faq.q5": "¿Y si no me gusta?",
+    "faq.a5": "Cancela cuando quieras. Sin contrato, sin penalización. Los primeros 14 días son gratis — si para el día 10 no te está ahorrando tiempo, cancela y no debes nada.",
+    "faq.q6": "¿Necesito instalar algo?",
+    "faq.a6": "No. Sigues usando WhatsApp como siempre. Nosotros hacemos toda la configuración de forma remota. Lo único que necesitas hacer es escanear un código QR durante la incorporación — eso toma 30 segundos.",
+    "cta.title": "Pruébalo Gratis. Mira Si Te Ahorra Tiempo.",
+    "cta.sub": "Sin tarjeta de crédito. Sin cuotas de configuración. Te incorporamos personalmente y tenemos tu bot funcionando en 24 horas. Si para el día 10 no te ahorra tiempo — te vas, gratis.",
+    "cta.btn": "Comienza Ahora →",
+    "signup.title": "Comienza Tu Prueba Gratis",
+    "signup.sub": "Completa esto. Arthur (quien construyó esto) te contactará dentro de 24 horas para configurarlo. Sin presión. Sin discurso. Solo una conversación.",
+    "signup.bizLabel": "Nombre del Negocio *",
+    "signup.bizPlaceholder": "Tu clínica o nombre de tienda",
+    "signup.emailLabel": "Correo Electrónico *",
+    "signup.emailPlaceholder": "tu@ejemplo.com",
+    "signup.phoneLabel": "Número de WhatsApp",
+    "signup.phonePlaceholder": "+597 xxx xxxx",
+    "signup.indLabel": "Industria",
+    "signup.indOpts": ["Seleccionar...","Belleza / Estética","Dental","Peluquería / Salón","Fisioterapia / Quiro","Gimnasio / Fitness","Estudio de Tatuajes","Salón de Uñas","Otro"],
+    "signup.planLabel": "Plan",
+    "signup.planPlaceholder": "Haz clic en un plan arriba o escribe aquí",
+    "signup.msgLabel": "¿Qué debemos saber sobre tu negocio?",
+    "signup.msgPlaceholder": "Ej.: ¿qué idiomas hablan tus clientes? ¿Aproximadamente cuántos mensajes de WhatsApp recibes al día?",
+    "signup.send": "Enviar →",
+    "signup.ok": "✓ ¡Recibido! Arthur te contactará dentro de 24 horas para configurarlo.",
+    "testimonial.quote": '"Pasaba 3 horas al día respondiendo WhatsApp. Las mismas preguntas una y otra vez — precios, direcciones, horarios de citas. Ahora el bot se encarga de todo. Reviso mi teléfono la mitad de las veces."',
+    "testimonial.author": "— Clínica Estética, Paramaribo",
+    "trust.clinics": "1 clínica activa en Paramaribo",
+    "trust.built": "· Hecho en Surinam 🇸🇷 · Sin capital de riesgo, solo construyendo algo útil",
+    "footer.addr": " · Paramaribo, Surinam"
+  }
+};
+
+// ── Chat messages per language ──────────
+function getChatMessages(lang) {
+  return [
+    { dir: "in",  msg: I18N[lang]["chat.c0"], time: "2:15 PM" },
+    { dir: "out", msg: I18N[lang]["chat.c1"], time: "2:15 PM" },
+    { dir: "in",  msg: I18N[lang]["chat.c2"], time: "2:16 PM" },
+    { dir: "out", msg: I18N[lang]["chat.c3"], time: "2:16 PM" },
+    { dir: "in",  msg: I18N[lang]["chat.c4"], time: "2:17 PM" },
+    { dir: "out", msg: I18N[lang]["chat.c5"], time: "2:17 PM" },
+  ];
+}
+
+// ── FAQ items per language ──────────────
+function getFAQItems(lang) {
+  const t = I18N[lang];
+  const items = [];
+  for (let i = 1; i <= 6; i++) {
+    items.push({ q: t["faq.q" + i], a: t["faq.a" + i] });
+  }
+  return items;
+}
+
+// ── Render functions ────────────────────
+function renderChat(lang) {
+  const msgs = getChatMessages(lang);
+  const body = document.getElementById("chatBody");
+  body.innerHTML = msgs.map(function(m) {
+    return '<div class="chat-msg ' + m.dir + '">' + m.msg + '<div class="time">' + m.time + '</div></div>';
+  }).join("") + '<div class="chat-typing"><span></span><span></span><span></span></div>';
+}
+
+function renderFAQ(lang) {
+  const items = getFAQItems(lang);
+  const container = document.getElementById("faqList");
+  container.innerHTML = items.map(function(item) {
+    return '<div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle(\'open\')">' + item.q + '<span class="faq-arrow">▼</span></div><div class="faq-a">' + item.a + '</div></div>';
+  }).join("");
+}
+
+function renderIndustryOptions(lang) {
+  var opts = I18N[lang]["signup.indOpts"];
+  var select = document.getElementById("industry");
+  var currentVal = select.value;
+  select.innerHTML = opts.map(function(o) {
+    return '<option>' + o + '</option>';
+  }).join("");
+  // Restore selection if value matches a new option
+  for (var i = 0; i < select.options.length; i++) {
+    if (select.options[i].value === currentVal) {
+      select.value = currentVal;
+      return;
+    }
+  }
+}
+
+// ── Apply language ──────────────────────
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  localStorage.setItem("mizhi-lang", lang);
+
+  // Text content
+  document.querySelectorAll("[data-i18n]").forEach(function(el) {
+    var key = el.getAttribute("data-i18n");
+    if (I18N[lang][key]) el.textContent = I18N[lang][key];
+  });
+
+  // HTML content (for elements with markup like hero title)
+  document.querySelectorAll("[data-i18n-html]").forEach(function(el) {
+    var key = el.getAttribute("data-i18n-html");
+    if (I18N[lang][key]) el.innerHTML = I18N[lang][key];
+  });
+
+  // Placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
+    var key = el.getAttribute("data-i18n-placeholder");
+    if (I18N[lang][key]) el.placeholder = I18N[lang][key];
+  });
+
+  // Pricing badge
+  var badge = I18N[lang]["pricing.badge"];
+  var featured = document.querySelector(".pricing-card.featured");
+  if (featured) featured.setAttribute("data-badge", badge);
+
+  renderChat(lang);
+  renderFAQ(lang);
+  renderIndustryOptions(lang);
+
+  // Update active lang button
+  document.querySelectorAll(".lang-btn").forEach(function(btn) {
+    btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+  });
+}
+
+// ── Detector ────────────────────────────
+function detectLang() {
+  // 1. Saved preference
+  var saved = localStorage.getItem("mizhi-lang");
+  if (saved && I18N[saved]) return saved;
+
+  // 2. Browser language
+  var nav = (navigator.language || "").toLowerCase();
+  if (nav.startsWith("zh")) return "zh";
+  if (nav.startsWith("nl")) return "nl";
+  if (nav.startsWith("es")) return "es";
+  return "en";
+}
+
+// ── Init ────────────────────────────────
+document.querySelectorAll(".lang-btn").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    applyLang(btn.getAttribute("data-lang"));
+  });
+});
+
+applyLang(detectLang());
+</script>
+
+<script>
+// ── Signup ──────────────────────────────
 function selectPlan(name) {
   document.getElementById("plan").value = name;
   document.getElementById("signup").scrollIntoView({ behavior: "smooth" });
@@ -697,24 +1240,6 @@ document.getElementById("signupForm").addEventListener("submit", async function(
   btn.textContent = "Send →";
 });
 </script>
-
-<section class="section container">
-  <div class="testimonial">
-    <p>
-      "I used to spend 3 hours a day replying to WhatsApp. Same questions over
-      and over — prices, directions, appointment slots. Now the bot handles all
-      of it. I check my phone half as much."
-    </p>
-    <div class="author">— Aesthetics Clinic, Paramaribo</div>
-  </div>
-  <div class="trust-bar">
-    <strong>1 clinic live in Paramaribo</strong> · Built in Suriname 🇸🇷 · No VC funding, just building something useful
-  </div>
-</section>
-
-<footer class="container">
-  <p>mizhi-bot &copy; 2026 · Paramaribo, Suriname · <a href="mailto:arthur@mizhi-bot.com">arthur@mizhi-bot.com</a></p>
-</footer>
 
 </body>
 </html>
