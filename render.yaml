@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mizhi-bot-landing
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: "3000"
+      - key: BOT_URL
+        value: ""
