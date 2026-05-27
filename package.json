@@ -1,0 +1,12 @@
+{
+  "name": "mizhi-bot-landing",
+  "version": "1.0.0",
+  "description": "mizhi-bot landing page — AI Receptionist for WhatsApp & Telegram",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.0.0"
+  }
+}

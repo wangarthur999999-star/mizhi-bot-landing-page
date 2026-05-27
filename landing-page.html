@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mizhi-bot — AI Receptionist for WhatsApp & Telegram</title>
+<meta name="description" content="24/7 AI customer service agent for small service businesses. Auto-replies in 4 languages, books appointments, syncs with Google Calendar. $49/month.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fafafa; color: #1a1a1a; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ── Nav ────────────────────────────── */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
+  .nav-cta {
+    background: #1a1a1a; color: #fff; padding: 0.5rem 1.25rem;
+    border-radius: 6px; font-weight: 600; font-size: 0.875rem; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #e11d48; }
+
+  /* ── Hero ───────────────────────────── */
+  .hero { padding: 5rem 0 4rem; text-align: center; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
+    line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+  }
+  .hero .accent { color: #e11d48; }
+  .hero p {
+    font-size: 1.2rem; color: #555; max-width: 540px; margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 0.9rem 2rem; font-size: 1rem;
+    font-weight: 600; text-decoration: none; border-radius: 8px;
+    transition: all 0.2s; letter-spacing: 0.01em;
+  }
+  .btn-primary { background: #e11d48; color: #fff; }
+  .btn-primary:hover { background: #c0103a; transform: translateY(-1px); }
+  .btn-outline { border: 2px solid #d1d1d1; color: #1a1a1a; }
+  .btn-outline:hover { border-color: #1a1a1a; }
+
+  /* ── Proof bar ──────────────────────── */
+  .proof-bar {
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    padding: 2rem 0 3rem; border-bottom: 1px solid #e5e5e5;
+  }
+  .proof-item { text-align: center; }
+  .proof-num { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
+  .proof-label { font-size: 0.85rem; color: #777; margin-top: 0.25rem; }
+
+  /* ── Sections ───────────────────────── */
+  .section { padding: 5rem 0; }
+  .section h2 {
+    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
+    margin-bottom: 0.75rem; text-align: center;
+  }
+  .section-sub {
+    text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.05rem;
+  }
+
+  /* ── Features ───────────────────────── */
+  .features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+  .feature {
+    background: #fff; padding: 2rem; border-radius: 12px;
+    border: 1px solid #eee; transition: box-shadow 0.2s;
+  }
+  .feature:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .feature-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+  .feature h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .feature p { color: #666; font-size: 0.95rem; line-height: 1.7; }
+
+  /* ── How it works ───────────────────── */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .step {
+    background: #fff; padding: 2rem; border-radius: 12px;
+    border: 1px solid #eee; text-align: center;
+  }
+  .step-num {
+    width: 40px; height: 40px; background: #e11d48; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.1rem; margin: 0 auto 1rem;
+  }
+  .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step p { color: #666; font-size: 0.9rem; }
+
+  /* ── Pricing ────────────────────────── */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; align-items: start;
+  }
+  .pricing-card {
+    background: #fff; padding: 2.5rem 2rem; border-radius: 12px;
+    border: 1px solid #e5e5e5; position: relative;
+  }
+  .pricing-card.featured {
+    border: 2px solid #e11d48; box-shadow: 0 8px 30px rgba(225,29,72,0.1);
+  }
+  .pricing-card.featured::before {
+    content: "Most Popular"; position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%); background: #e11d48; color: #fff;
+    font-size: 0.75rem; font-weight: 700; padding: 0.25rem 1rem;
+    border-radius: 20px; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .plan-name { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .plan-price { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+  .plan-price span { font-size: 1rem; font-weight: 500; color: #777; }
+  .plan-desc { color: #777; font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .plan-features { list-style: none; margin-bottom: 2rem; }
+  .plan-features li {
+    padding: 0.4rem 0; font-size: 0.9rem; color: #444;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .plan-features li::before { content: "✓ "; color: #e11d48; font-weight: 700; }
+  .plan-cta {
+    display: block; text-align: center; padding: 0.75rem; border-radius: 8px;
+    font-weight: 600; text-decoration: none; font-size: 0.95rem;
+  }
+  .plan-cta-primary { background: #e11d48; color: #fff; }
+  .plan-cta-primary:hover { background: #c0103a; }
+  .plan-cta-outline { border: 2px solid #d1d1d1; color: #1a1a1a; }
+  .plan-cta-outline:hover { border-color: #1a1a1a; }
+
+  /* ── CTA section ────────────────────── */
+  .cta-section {
+    background: #1a1a1a; color: #fff; text-align: center;
+    padding: 5rem 0; border-radius: 16px; margin: 3rem 0;
+  }
+  .cta-section h2 {
+    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;
+  }
+  .cta-section p { color: #aaa; margin-bottom: 2rem; font-size: 1.05rem; }
+  .cta-section .btn-primary { font-size: 1.1rem; padding: 1rem 3rem; }
+
+  /* ── Testimonial ────────────────────── */
+  .testimonial {
+    background: #fff; border: 1px solid #eee; border-radius: 12px;
+    padding: 2.5rem; max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .testimonial p { font-size: 1.15rem; font-style: italic; color: #444; line-height: 1.8; margin-bottom: 1.5rem; }
+  .testimonial .author { font-weight: 700; color: #1a1a1a; }
+  .testimonial .role { color: #888; font-size: 0.9rem; }
+
+  /* ── Footer ─────────────────────────── */
+  footer {
+    text-align: center; padding: 3rem 0; color: #999; font-size: 0.85rem;
+    border-top: 1px solid #eee; margin-top: 3rem;
+  }
+  footer a { color: #666; }
+
+  @media (max-width: 640px) {
+    .hero { padding: 3rem 0 2rem; }
+    .section { padding: 3rem 0; }
+    .proof-bar { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">mizhi-bot</div>
+  <a href="#signup" class="nav-cta">Start Free Trial</a>
+</nav>
+
+<section class="hero container">
+  <h1>Your <span class="accent">AI Receptionist</span><br>for WhatsApp & Telegram</h1>
+  <p>
+    Handles inquiries, books appointments, and syncs with Google Calendar —
+    24/7 in 4 languages. Built for small service businesses tired of replying
+    to the same questions all day.
+  </p>
+  <div class="btn-group">
+    <a href="#pricing" class="btn btn-primary">Start 14-Day Free Trial</a>
+    <a href="#how" class="btn btn-outline">See How It Works</a>
+  </div>
+</section>
+
+<div class="proof-bar container">
+  <div class="proof-item">
+    <div class="proof-num">80%</div>
+    <div class="proof-label">Fewer Manual Replies</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">4</div>
+    <div class="proof-label">Languages (中/EN/NL/ES)</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">24/7</div>
+    <div class="proof-label">Always Online</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">$49</div>
+    <div class="proof-label">Per Month</div>
+  </div>
+</div>
+
+<section class="section container" id="features">
+  <h2>Everything Your Front Desk Needs</h2>
+  <p class="section-sub">No more hiring someone just to reply to WhatsApp.</p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">&#128172;</div>
+      <h3>Auto-Reply to Common Questions</h3>
+      <p>"How much?" "Where are you?" "What time?" — your bot answers them all in your brand's tone, in 4 languages.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">&#128197;</div>
+      <h3>Appointment Booking</h3>
+      <p>Customers book directly through chat. Automatically checks availability and syncs to Google Calendar.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">&#128200;</div>
+      <h3>Lead Scoring</h3>
+      <p>Know who's serious and who's just browsing. Hot leads get flagged so you can follow up personally.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">&#127760;</div>
+      <h3>4-Language Support</h3>
+      <p>Auto-detects Chinese, English, Dutch, and Spanish. Replies in the customer's language, naturally.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">&#128274;</div>
+      <h3>No Hallucinated Prices</h3>
+      <p>Built-in guardrails prevent the AI from making up prices, medical claims, or off-brand promises.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">&#9889;</div>
+      <h3>Never Goes Down</h3>
+      <p>3-provider fallback (DeepSeek → Mistral → OpenRouter), circuit breakers, and 344 automated tests.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="how">
+  <h2>How It Works</h2>
+  <p class="section-sub">You're set up in one day. No technical skills needed.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>We Onboard You</h3>
+      <p>Send us your service menu, pricing, and brand info. We configure your bot within 24 hours.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Connect WhatsApp</h3>
+      <p>We scan a QR code. Your bot goes live on your existing WhatsApp number or a new one.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>You Relax</h3>
+      <p>Your AI receptionist handles the routine. You step in only when a conversation needs a human touch.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="pricing">
+  <h2>Simple, Transparent Pricing</h2>
+  <p class="section-sub">14-day free trial on all plans. Cancel anytime. No contracts.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$49<span>/mo</span></div>
+      <p class="plan-desc">For small shops getting started with AI.</p>
+      <ul class="plan-features">
+        <li>Auto-reply to FAQs</li>
+        <li>4 languages (中/EN/NL/ES)</li>
+        <li>Appointment booking via chat</li>
+        <li>Basic lead capture</li>
+        <li>WhatsApp OR Telegram</li>
+        <li>Email support</li>
+      </ul>
+      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Starter')">Start Free Trial</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="plan-name">Professional</div>
+      <div class="plan-price">$99<span>/mo</span></div>
+      <p class="plan-desc">For busy clinics that want full automation.</p>
+      <ul class="plan-features">
+        <li>Everything in Starter</li>
+        <li>Google Calendar sync</li>
+        <li>Lead scoring + hot lead alerts</li>
+        <li>Custom brand voice & tone</li>
+        <li>WhatsApp + Telegram</li>
+        <li>Priority support (same-day)</li>
+      </ul>
+      <a href="#signup" class="plan-cta plan-cta-primary" onclick="selectPlan('Professional')">Start Free Trial</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">$199<span>/mo</span></div>
+      <p class="plan-desc">Multiple locations or high volume.</p>
+      <ul class="plan-features">
+        <li>Everything in Professional</li>
+        <li>Multi-location support</li>
+        <li>Custom AI training on your data</li>
+        <li>API access for CRM integration</li>
+        <li>Dedicated account manager</li>
+        <li>Phone support</li>
+      </ul>
+      <a href="#signup" class="plan-cta plan-cta-outline" onclick="selectPlan('Enterprise')">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<section class="container cta-section" id="trial">
+  <h2>Try mizhi-bot Free for 14 Days</h2>
+  <p>
+    No credit card. No setup fees. We'll personally onboard you and have your
+    bot running within 24 hours.
+  </p>
+  <a href="#signup" class="btn btn-primary">Get Started Free →</a>
+</section>
+
+<!-- ── Signup Form ─────────────────────── -->
+<style>
+  .signup-section { padding: 5rem 0; }
+  .signup-form {
+    max-width: 520px; margin: 0 auto;
+    background: #fff; padding: 2.5rem; border-radius: 12px;
+    border: 1px solid #eee; box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block; font-weight: 600; font-size: 0.9rem;
+    margin-bottom: 0.4rem; color: #333;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #ddd;
+    border-radius: 8px; font-size: 0.95rem; font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: #e11d48;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn {
+    width: 100%; padding: 0.9rem; background: #e11d48; color: #fff;
+    border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .submit-btn:hover { background: #c0103a; }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .form-success {
+    display: none; text-align: center; padding: 2rem;
+    color: #16a34a; font-weight: 600;
+  }
+  .form-error {
+    display: none; color: #dc2626; font-size: 0.85rem; margin-bottom: 1rem;
+  }
+</style>
+
+<section class="signup-section container" id="signup">
+  <h2 style="text-align:center; margin-bottom:0.5rem;">Start Your Free Trial</h2>
+  <p class="section-sub">Fill out the form below. Arthur will personally reach out within 24 hours.</p>
+
+  <div class="signup-form">
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="businessName">Business Name *</label>
+        <input type="text" id="businessName" name="businessName" required placeholder="Your clinic or shop name">
+      </div>
+      <div class="form-group">
+        <label for="contactEmail">Email *</label>
+        <input type="email" id="contactEmail" name="contactEmail" required placeholder="you@example.com">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="contactPhone">WhatsApp Number</label>
+          <input type="text" id="contactPhone" name="contactPhone" placeholder="+597 xxx xxxx">
+        </div>
+        <div class="form-group">
+          <label for="industry">Industry</label>
+          <select id="industry" name="industry">
+            <option value="">Select...</option>
+            <option>Beauty / Aesthetics</option>
+            <option>Dental</option>
+            <option>Barbershop / Salon</option>
+            <option>Physiotherapy / Chiro</option>
+            <option>Gym / Fitness</option>
+            <option>Tattoo Studio</option>
+            <option>Nail Salon</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Plan</label>
+        <input type="text" id="plan" name="plan" readonly placeholder="Click a pricing card above or type here" style="background:#f9f9f9;">
+      </div>
+      <div class="form-group">
+        <label for="message">Anything else we should know?</label>
+        <textarea id="message" name="message" rows="2" placeholder="E.g., which languages do your customers speak? How many WhatsApp messages do you get per day?"></textarea>
+      </div>
+      <div class="form-error" id="formError"></div>
+      <button type="submit" class="submit-btn" id="submitBtn">Send →</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      &#10003; Thanks! Arthur will reach out within 24 hours to set up your bot.
+    </div>
+  </div>
+</section>
+
+<script>
+function selectPlan(name) {
+  document.getElementById("plan").value = name;
+  document.getElementById("signup").scrollIntoView({ behavior: "smooth" });
+}
+
+document.getElementById("signupForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById("submitBtn");
+  const err = document.getElementById("formError");
+  const ok = document.getElementById("formSuccess");
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+  err.style.display = "none";
+
+  try {
+    const resp = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        businessName: document.getElementById("businessName").value,
+        contactEmail: document.getElementById("contactEmail").value,
+        contactPhone: document.getElementById("contactPhone").value,
+        industry: document.getElementById("industry").value,
+        plan: document.getElementById("plan").value,
+        message: document.getElementById("message").value,
+      }),
+    });
+    if (resp.ok) {
+      document.getElementById("signupForm").style.display = "none";
+      ok.style.display = "block";
+    } else {
+      const data = await resp.json();
+      err.textContent = data.error || "Something went wrong. Please try again.";
+      err.style.display = "block";
+    }
+  } catch (_) {
+    err.textContent = "Network error. Please try again.";
+    err.style.display = "block";
+  }
+  btn.disabled = false;
+  btn.textContent = "Send →";
+});
+</script>
+
+<section class="section container">
+  <div class="testimonial">
+    <p>
+      "I used to spend 3 hours a day replying to WhatsApp. Same questions over
+      and over — prices, directions, appointment slots. Now the bot handles all
+      of it. I check my phone half as much. Game changer."
+    </p>
+    <div class="author">Beauty Clinic Owner</div>
+    <div class="role">Paramaribo, Suriname</div>
+  </div>
+</section>
+
+<footer class="container">
+  <p>mizhi-bot &copy; 2026 &middot; Built in Suriname &#127480;&#127475; &middot; <a href="mailto:arthur@mizhi-bot.com">Contact</a></p>
+</footer>
+
+</body>
+</html>
