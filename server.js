@@ -4,11 +4,37 @@ const path = require("path");
 
 const PORT = process.env.PORT || 3000;
 const LEADS_FILE = path.join(__dirname, "leads.json");
+const LEADS_TMP = path.join(__dirname, "leads.tmp.json");
 const BOT_URL = process.env.BOT_URL || ""; // e.g. https://mizhi-bot.onrender.com
 
 const app = express();
 app.use(express.json());
 app.use(express.static(__dirname));
+
+// Simple in-memory rate limiter: max 5 signups per IP per hour
+const rateLimitMap = new Map();
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW) {
+    rateLimitMap.set(ip, { count: 1, windowStart: now });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
+
+// Cleanup old rate limit entries every 10 minutes
+setInterval(() => {
+  const cutoff = Date.now() - RATE_LIMIT_WINDOW;
+  for (const [ip, entry] of rateLimitMap) {
+    if (entry.windowStart < cutoff) rateLimitMap.delete(ip);
+  }
+}, 10 * 60 * 1000);
 
 // Home — serve landing page
 app.get("/", (_req, res) => {
@@ -17,6 +43,11 @@ app.get("/", (_req, res) => {
 
 // Signup handler
 app.post("/api/signup", async (req, res) => {
+  const ip = req.ip || req.socket?.remoteAddress || "unknown";
+  if (!checkRateLimit(ip)) {
+    return res.status(429).json({ error: "Too many requests. Please try again later." });
+  }
+
   const { businessName, contactEmail, contactPhone, industry, plan, message } = req.body;
 
   if (!businessName || !contactEmail) {
@@ -40,13 +71,14 @@ app.post("/api/signup", async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  // Always save locally
+  // Atomic save: write to temp file, then rename
   let leads = [];
   try {
     leads = JSON.parse(fs.readFileSync(LEADS_FILE, "utf-8"));
   } catch (_) {}
   leads.push(lead);
-  fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2));
+  fs.writeFileSync(LEADS_TMP, JSON.stringify(leads, null, 2));
+  fs.renameSync(LEADS_TMP, LEADS_FILE);
 
   // Forward to bot if configured
   if (BOT_URL) {
@@ -62,7 +94,7 @@ app.post("/api/signup", async (req, res) => {
     }
   }
 
-  console.log(`[signup] ${businessName} <${contactEmail}> — ${plan || "no plan"}`);
+  console.log(`[signup] ${businessName} — ${plan || "no plan"}`);
 
   res.status(201).json({ ok: true, message: "Thanks! We'll reach out within 24 hours." });
 });
